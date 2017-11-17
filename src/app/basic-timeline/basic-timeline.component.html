@@ -1,2 +1,3 @@
 <img [src]="IMAGE">
-<app-timeline-control> </app-timeline-control>  
+<app-timeline-control (onPlay)= "startTimer($event)" (fastForward) ="goForth($event)" (backward)="goBack($event)" (OnSpeed)="speedModifier($event)"> </app-timeline-control> 
+<app-timeline-bar [max]="4" [current]="count" (currentValue)="updateCount($event)"> </app-timeline-bar>

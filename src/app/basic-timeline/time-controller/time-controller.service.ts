@@ -14,7 +14,7 @@ export class TimeControllerService {
     clearInterval(this.intervalId);
   }
 
-  startTimer(callback: () => void): void {
+  startTimer(callback: () => void) {
     this.clearTimer();
     this.intervalId = window.setInterval(() => {
       callback();
