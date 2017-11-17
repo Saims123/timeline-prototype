@@ -2,3 +2,20 @@ img{
     width: 400px;
     height: 300px;
 }
+
+.controls{
+        width: 200px;
+    height: 50px;
+    margin-bottom:2%;
+    border-left: 6px solid lightcoral;
+    background-color: lightgrey;
+    display: inline-block;
+}
+.bar{
+    width: 200px;
+    height: 50px;
+    margin-bottom:2%;
+    border-left: 6px solid lightskyblue;
+    background-color: lightgrey;
+     display: inline-block;
+}

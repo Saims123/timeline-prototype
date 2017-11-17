@@ -10,12 +10,14 @@ export class TimelineBarComponent implements OnInit, OnChanges {
   @Input('max') max: number;
   @Input('current')current: number;
   @Input('step') step = 1;
+  @Input('data') data: any;
   @Output()currentValue = new EventEmitter<number>();
 
   maxLength = 0;
   minLength = 0;
   steps = 0;
   currentPointer = 0;
+  samples: any [] = [];
   constructor() {
 
   }
@@ -24,6 +26,7 @@ export class TimelineBarComponent implements OnInit, OnChanges {
     this.maxLength = this.max;
     this.minLength = this.min;
     this.step = this.steps;
+    this.samples = this.data;
   }
 
   ngOnChanges(changes: SimpleChanges) {

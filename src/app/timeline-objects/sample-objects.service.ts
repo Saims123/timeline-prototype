@@ -2,17 +2,30 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class SampleObjectsService {
-public cats:  string[] = [];
+  public samples: SampleObject[] = [];
 
   constructor() {
-    this.cats[0] = '/assets/resources/cute-cat.jpg';
-    this.cats[1] = '/assets/resources/cute-cat-2.jpg';
-    this.cats[2] = '/assets/resources/cute-cat-3.jpg';
-    this.cats[3] = '/assets/resources/cute-cat-4.jpg';
-   }
+    this.samples[0] = new SampleObject('/assets/resources/cute-cat.jpg');
+    this.samples[1] = new SampleObject('/assets/resources/cute-cat-2.jpg');
+    this.samples[2] = new SampleObject('/assets/resources/cute-cat-3.jpg');
+    this.samples[3] = new SampleObject('/assets/resources/cute-cat-4.jpg');
+    this.samples[4] = new SampleObject('/assets/resources/solar1.jpg');
+    this.samples[5] = new SampleObject('/assets/resources/solar2.jpg');
+    this.samples[6] = new SampleObject('/assets/resources/solar3.jpg');
+  }
 
-   getCats() {
-     return this.cats;
-   }
+  getsamples() {
+    console.log(this.samples);
+    return this.samples;
+  }
+
+}
+
+
+ class SampleObject {
+  static _id = 0;
+  private id: number;
+  public data: any;
+  constructor(_data) { this.id = SampleObject._id ++; this.data = _data; }
 
 }

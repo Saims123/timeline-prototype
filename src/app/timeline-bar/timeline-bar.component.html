@@ -1,1 +1,7 @@
-<input type="range" [min]="0" [max]="maxLength" [step]="steps" [value]="currentPointer" (click)="update()">
+<input type="range" [min]="0" [max]="maxLength - 1" [step]="steps" [(ngModel)]="currentPointer" (change)="update()">
+
+<ul >
+    <li *ngFor="let time in samples">
+            <span> {{time.id}} </span>
+    </li>
+</ul>

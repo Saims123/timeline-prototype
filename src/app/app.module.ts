@@ -12,6 +12,7 @@ import { TimelineBarComponent } from './timeline-bar/timeline-bar.component';
 import {SampleObjectsService} from './timeline-objects/sample-objects.service';
 import { TimeControllerService } from './basic-timeline/time-controller/time-controller.service';
 import { HeaderComponent } from './header/header.component';
+import { TimelineTestComponent } from './timeline-test/timeline-test.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +20,8 @@ import { HeaderComponent } from './header/header.component';
     TimelineControlComponent,
     TimelineBarComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    TimelineTestComponent
   ],
   imports: [
     BrowserModule,

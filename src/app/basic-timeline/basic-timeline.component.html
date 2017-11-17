@@ -1,3 +1,7 @@
 <img [src]="IMAGE">
+<div class="controls">
 <app-timeline-control (onPlay)= "startTimer($event)" (fastForward) ="goForth($event)" (backward)="goBack($event)" (OnSpeed)="speedModifier($event)"> </app-timeline-control> 
-<app-timeline-bar [max]="4" [current]="count" (currentValue)="updateCount($event)"> </app-timeline-bar>
+</div> 
+<div class="bar">
+<app-timeline-bar [data]= "sample" [max]="maxCount" [current]="count" [step]=0.1 (currentValue)="updateCount($event)" > </app-timeline-bar>
+</div>

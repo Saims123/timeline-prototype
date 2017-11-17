@@ -14,10 +14,10 @@ export class TimeControllerService {
     clearInterval(this.intervalId);
   }
 
-  startTimer(callback: () => void) {
+  startTimer() {
     this.clearTimer();
     this.intervalId = window.setInterval(() => {
-      callback();
+
       if (this.currentTime > this.timeRange) {
         this.currentTime = 0;
       }
