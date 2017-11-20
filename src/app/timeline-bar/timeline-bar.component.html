@@ -1,7 +1,9 @@
+<div class="bar">
 <input type="range" [min]="0" [max]="maxLength - 1" [step]="steps" [(ngModel)]="currentPointer" (change)="update()">
 
-<ul >
-    <li *ngFor="let time in samples">
-            <span> {{time.id}} </span>
+<ul class="bar">
+    <li *ngFor="let time of data" (mouseenter)="mouseEnter(time.id)" [class.current]="currentPointer === time.id">
+            <span > {{time.id}} </span>
     </li>
 </ul>
+</div>

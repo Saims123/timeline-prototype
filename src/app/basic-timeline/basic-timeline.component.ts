@@ -13,8 +13,10 @@ export class BasicTimelineComponent implements OnInit {
   Timer = 0;
   maxCount = 0;
   timeInterval = 1000;
+  obj: any [];
   constructor(private sample: SampleObjectsService, private timer: TimeControllerService) {
       this.maxCount = sample.samples.length;
+      this.obj = sample.getSamples();
   }
   ngOnInit() {
     this.timer.setTimeRange(this.maxCount);
@@ -33,7 +35,7 @@ startTimer(isOn) {
 task(): void {
 
 this.count = (this.count + 1) % this.maxCount;
-this.IMAGE = this.sample.getsamples()[this.count].data;
+this.IMAGE = this.sample.getSamples()[this.count].data;
 }
 
 goForth(state) {
@@ -43,9 +45,9 @@ this.task();
 
 speedModifier(state) {
   if (state) {
-  this.timeInterval /= 2;
+  this.timeInterval /= 4;
   } else {
-      this.timeInterval *= 2;
+      this.timeInterval *= 4;
   }
   this.startTimer(true);
 
@@ -56,7 +58,7 @@ goBack(state) {
   if (this.count < 0) {
     this.count = this.maxCount - 1 ;
   }
-this.IMAGE = this.sample.getsamples()[this.count].data;
+this.IMAGE = this.sample.getSamples()[this.count].data;
 
 console.log(this.count);
 }
@@ -64,7 +66,7 @@ console.log(this.count);
 updateCount(newCount) {
   console.log('Update Count', newCount);
   this.count = newCount;
-  this.IMAGE = this.sample.getsamples()[this.count].data;
+  this.IMAGE = this.sample.getSamples()[this.count].data;
 }
 
 
