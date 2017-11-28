@@ -5,6 +5,7 @@ export class SampleObjectsService {
   public samples: any[] = [];
 
   constructor() {
+
     this.samples.push(new SampleObject('/assets/resources/cute-cat.jpg'));
     this.samples.push(new SampleObject('/assets/resources/cute-cat-2.jpg'));
     this.samples.push(new SampleObject('/assets/resources/cute-cat-3.jpg'));
@@ -16,6 +17,7 @@ export class SampleObjectsService {
     this.samples.push(new SampleObject('/assets/resources/weather2.jpg'));
     this.samples.push(new SampleObject('/assets/resources/weather3.jpg'));
     this.samples.push(new SampleObject('/assets/resources/weather4.jpg'));
+    SampleObject._id = 0;
   }
 
   getSamples() {
@@ -25,7 +27,7 @@ export class SampleObjectsService {
 }
 
 
-class SampleObject {
+export class SampleObject {
   static _id = 0;
   private id: number;
   public data: any;

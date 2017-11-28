@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SampleObjectsService } from '../timeline-objects/sample-objects.service';
+import { SampleObjectsService , SampleObject} from '../timeline-objects/sample-objects.service';
 import { TimelineBarComponent } from './timeline-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, By } from '@angular/platform-browser';
@@ -8,6 +8,24 @@ describe('TimelineBarComponent', () => {
   let fixture: ComponentFixture<TimelineBarComponent>;
   let timelineBar: any;
   let userService: SampleObjectsService;
+  class MockSampleService extends SampleObjectsService {
+    constructor() {super();  }
+    samples = [
+      new SampleObject('Test 1'),
+      new SampleObject('Test 2'),
+      new SampleObject('Test 3'),
+      new SampleObject('Test 4'),
+      new SampleObject('Test 5'),
+    ];
+
+    getSamples() {
+      return this.samples;
+    }
+
+
+}
+
+
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -54,7 +72,8 @@ describe('TimelineBarComponent', () => {
       f.detectChanges();
       // console.log((timelineBar.nativeElement.textContent));
 
-      userService = f.debugElement.injector.get(SampleObjectsService);
+      // userService = f.debugElement.injector.get(SampleObjectsService);
+      userService = new MockSampleService();
       console.log(userService.getSamples());
 
       expect(10).toEqual(10);
