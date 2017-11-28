@@ -6,6 +6,7 @@ export class TimeControllerService {
   private intervalId = 0;
   private timeRange = 0;
   private currentTime = 0;
+  private isPlay: false;
 
   constructor() {
   }

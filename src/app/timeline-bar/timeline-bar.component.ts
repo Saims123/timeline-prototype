@@ -12,6 +12,7 @@ export class TimelineBarComponent implements OnInit, OnChanges {
   @Input('step') step = 1;
   @Input('data') data: any[];
   @Output() currentValue = new EventEmitter<number>();
+  @Output() onPlay = new EventEmitter<boolean>();
 
   maxLength = 0;
   minLength = 0;
@@ -39,6 +40,12 @@ export class TimelineBarComponent implements OnInit, OnChanges {
   mouseEnter(num) {
     this.currentPointer = num;
     this.currentValue.emit(this.currentPointer);
+  }
+
+    mouseClick(num) {
+    this.currentPointer = num;
+    this.currentValue.emit(this.currentPointer);
+    this.onPlay.emit(false);
   }
 
 

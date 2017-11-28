@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SampleObjectsService } from '../timeline-objects/sample-objects.service';
-import { TimeControllerService } from '../basic-timeline/time-controller/time-controller.service';
 
 @Component({
   selector: 'app-basic-timeline',
@@ -14,12 +13,13 @@ export class BasicTimelineComponent implements OnInit {
   maxCount = 0;
   timeInterval = 1000;
   obj: any [];
-  constructor(private sample: SampleObjectsService, private timer: TimeControllerService) {
+  isOn: boolean;
+  constructor(private sample: SampleObjectsService) {
       this.maxCount = sample.samples.length;
       this.obj = sample.getSamples();
   }
   ngOnInit() {
-    this.timer.setTimeRange(this.maxCount);
+
   }
 
 startTimer(isOn) {
@@ -29,6 +29,7 @@ startTimer(isOn) {
   } else {
     clearInterval(this.Timer);
   }
+  this.isOn = isOn;
 
 }
 
@@ -40,7 +41,6 @@ this.IMAGE = this.sample.getSamples()[this.count].data;
 
 goForth(state) {
 this.task();
-
 }
 
 speedModifier(state) {
@@ -49,7 +49,9 @@ speedModifier(state) {
   } else {
       this.timeInterval *= 4;
   }
+  if (this.isOn) {
   this.startTimer(true);
+  }
 
 }
 
@@ -59,8 +61,6 @@ goBack(state) {
     this.count = this.maxCount - 1 ;
   }
 this.IMAGE = this.sample.getSamples()[this.count].data;
-
-console.log(this.count);
 }
 
 updateCount(newCount) {

@@ -1,3 +1,4 @@
+<h2>Generic Timeline component</h2>
 <img [src]="IMAGE">
 
 <div class="controls">
@@ -5,5 +6,5 @@
 </div>
 
 <div class="bar">
-<app-timeline-bar [data]= "obj" [max]="maxCount" [current]="count" [step]=0.1 (currentValue)="updateCount($event)" > </app-timeline-bar>
+<app-timeline-bar [data]= "obj" [max]="maxCount" [current]="count" [step]=0.1 (currentValue)="updateCount($event)" (onPlay)= "startTimer($event)" > </app-timeline-bar>
 </div>

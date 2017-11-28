@@ -14,7 +14,7 @@ export class SampleObjectsService {
     this.samples.push(new SampleObject('/assets/resources/solar3.jpg'));
     this.samples.push(new SampleObject('/assets/resources/weather1.gif'));
     this.samples.push(new SampleObject('/assets/resources/weather2.jpg'));
-    this.samples[9] = new SampleObject('/assets/resources/weather3.jpg'));
+    this.samples.push(new SampleObject('/assets/resources/weather3.jpg'));
     this.samples.push(new SampleObject('/assets/resources/weather4.jpg'));
   }
 
@@ -31,4 +31,7 @@ class SampleObject {
   public data: any;
   constructor(_data) { this.id = SampleObject._id++; this.data = _data; }
 
+  // toString() {
+  //   return JSON.stringify(this, null, 2) + '\n';
+  // }
 }

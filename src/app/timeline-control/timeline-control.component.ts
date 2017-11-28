@@ -32,10 +32,14 @@ export class TimelineControlComponent implements OnInit {
 
   fast() {
     this.fastForward.emit(true);
+    this.isPlay = false;
+    this.onPlay.emit(this.isPlay);
   }
 
     back() {
     this.backward.emit(true);
+    this.isPlay = false;
+    this.onPlay.emit(this.isPlay);
   }
 
 changeSpeed() {

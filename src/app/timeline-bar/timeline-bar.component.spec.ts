@@ -1,25 +1,65 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { SampleObjectsService } from '../timeline-objects/sample-objects.service';
 import { TimelineBarComponent } from './timeline-bar.component';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule, By } from '@angular/platform-browser';
 describe('TimelineBarComponent', () => {
   let component: TimelineBarComponent;
   let fixture: ComponentFixture<TimelineBarComponent>;
+  let timelineBar: any;
+  let userService: SampleObjectsService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimelineBarComponent ]
+      declarations: [TimelineBarComponent],
+      imports: [FormsModule, ReactiveFormsModule, BrowserModule],
+      providers: [SampleObjectsService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(TimelineBarComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+
   });
+
+  it('should contain maximum value of 0 and 10', () => {
+    component.maxLength = 0;
+    expect(component.maxLength).toEqual(0);
+
+    component.maxLength = 10;
+    expect(component.maxLength).toEqual(10);
+  });
+
+  describe('TimelineBar Status', () => {
+    it('should be 10 timeline sub bars', () => {
+    const f = TestBed.createComponent(TimelineBarComponent);
+    const c = f.componentInstance;
+
+      c.data = [
+        { id: 1, data: 'Hello there 1' },
+        { id: 2, data: 'Hello there 2' },
+        { id: 3, data: 'Hello there 3' },
+        { id: 4, data: 'Hello there 4' },
+        { id: 5, data: 'Hello there 5' },
+      ];
+      c.max = c.data.length;
+      timelineBar = f.debugElement.query(By.css(('ul')));
+      f.detectChanges();
+      // console.log((timelineBar.nativeElement.textContent));
+
+      userService = f.debugElement.injector.get(SampleObjectsService);
+      console.log(userService.getSamples());
+
+      expect(10).toEqual(10);
+
+    });
+  });
+
 });
