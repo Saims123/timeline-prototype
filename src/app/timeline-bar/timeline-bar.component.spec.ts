@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick} from '@angular/core/testing';
 import { SampleObjectsService , SampleObject} from '../timeline-objects/sample-objects.service';
 import { TimelineBarComponent } from './timeline-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,7 +8,8 @@ describe('TimelineBarComponent', () => {
   let fixture: ComponentFixture<TimelineBarComponent>;
   let timelineBar: any;
   let userService: SampleObjectsService;
-  class MockSampleService extends SampleObjectsService {
+  let spy: any;
+  class MockSampleService extends SampleObjectsService { // Extended Override method
     constructor() {super();  }
     samples = [
       new SampleObject('Test 1'),
@@ -22,10 +23,7 @@ describe('TimelineBarComponent', () => {
       return this.samples;
     }
 
-
 }
-
-
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,6 +42,7 @@ describe('TimelineBarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    
 
   });
 
@@ -56,7 +55,7 @@ describe('TimelineBarComponent', () => {
   });
 
   describe('TimelineBar Status', () => {
-    it('should be 10 timeline sub bars', () => {
+    it('should be 10 timeline sub bars', (done: any) => {
     const f = TestBed.createComponent(TimelineBarComponent);
     const c = f.componentInstance;
 
@@ -74,10 +73,14 @@ describe('TimelineBarComponent', () => {
 
       // userService = f.debugElement.injector.get(SampleObjectsService);
       userService = new MockSampleService();
+
+      spy  = spyOn(userService, 'getSamples').and.returnValue(true);
+
       console.log(userService.getSamples());
-
-      expect(10).toEqual(10);
-
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(10).toEqual(10); // Neagtive passing
+      done();
+ 
     });
   });
 

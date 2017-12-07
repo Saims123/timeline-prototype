@@ -19,6 +19,7 @@ import { AppRouting } from './routing.module/app-routing.module';
 // Map Components
 import { LayerModule } from '@mo-map/layer';
 import { MoMapModule } from '@mo-map/core';
+import { TimelineTimebarComponent } from './timeline-timebar/timeline-timebar.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full'},
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
     TimelineControlComponent,
     TimelineBarComponent,
     FooterComponent,
-    TimelineTestComponent
+    TimelineTestComponent,
+    TimelineTimebarComponent
   ],
   imports: [
     BrowserModule,

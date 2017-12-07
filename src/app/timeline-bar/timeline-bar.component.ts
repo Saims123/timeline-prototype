@@ -9,14 +9,14 @@ export class TimelineBarComponent implements OnInit, OnChanges {
   @Input('min') min = 0;
   @Input('max') max: number;
   @Input('current') current: number;
-  @Input('step') step = 1;
+  @Input('step') step = 0.1;
   @Input('data') data: any[];
   @Output() currentValue = new EventEmitter<number>();
   @Output() onPlay = new EventEmitter<boolean>();
 
   maxLength = 0;
   minLength = 0;
-  steps = 0;
+  steps = 0.1;
   currentPointer = 0;
   constructor() {
   }
@@ -48,5 +48,11 @@ export class TimelineBarComponent implements OnInit, OnChanges {
     this.onPlay.emit(false);
   }
 
+mouseMove(e) {
+// console.log(Math.floor((e.offsetX / e.target.clientWidth) * parseInt('10', 11)));
+this.currentPointer = Math.floor(((e.offsetX / e.target.clientWidth)) * 11);
+console.log(this.currentPointer);
+this.update();
+}
 
 }

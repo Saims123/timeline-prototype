@@ -1,0 +1,35 @@
+.bar{
+    font-size: 30px;
+    height: 50px;
+    list-style: none;
+    border: 1px solid greenyellow;
+
+}
+li{
+    display:table-cell;
+    padding: 20px;
+    margin-right: 2%;
+    text-align: left;
+    top: 50%;
+    
+}
+li:hover{
+    background-color: darkorange;
+}
+
+input{
+    width: 90%;
+}
+.seperator {
+    border-left:1px dotted black;
+}
+
+ul {
+    display: table;
+    padding: 0;
+    width: 100%;
+}
+
+.container {
+    border: 2px dotted black;
+}

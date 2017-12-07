@@ -1,9 +1,10 @@
 <div class="bar">
-<input type="range" [min]="0" [max]="maxLength - 1" [step]="steps" [(ngModel)]="currentPointer" (change)="update()">
-
+<input type="range" [min]="0" [max]="maxLength - 1" [step]="steps" [(ngModel)]="currentPointer" (change)="update()" (mousemove)="mouseMove($event)">
+<div >
 <ul class="bar">
     <li class="list" *ngFor="let time of data" (mouseenter)="mouseEnter(time.id)" (click)="mouseClick(time.id)"[class.current]="currentPointer === time.id">
             <span > {{time.id}} </span>
     </li>
 </ul>
+</div>
 </div>

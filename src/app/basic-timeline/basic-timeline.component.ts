@@ -17,6 +17,8 @@ export class BasicTimelineComponent implements OnInit {
   constructor(private sample: SampleObjectsService) {
       this.maxCount = sample.samples.length;
       this.obj = sample.getSamples();
+      let a = new MockTimelineObject(new Date(), new Date());
+      console.log(JSON.stringify(a));
   }
   ngOnInit() {
 
@@ -25,7 +27,17 @@ export class BasicTimelineComponent implements OnInit {
 startTimer(isOn) {
    clearInterval(this.Timer);
   if (isOn) {
-    this.Timer = window.setInterval(() => {this.task(); }, this.timeInterval);
+    let start = new Date().getTime(), elapsed = 0.0;
+
+    this.Timer = window.setInterval(() => {
+    this.task();
+    let time = new Date().getTime() - start;
+    elapsed = Math.floor(time / 1000) / 10;
+    if (Math.round(elapsed) === elapsed) {elapsed += .0; }
+    this.timeInterval = time;
+    console.log(time);
+
+}, this.timeInterval);
   } else {
     clearInterval(this.Timer);
   }
@@ -70,4 +82,12 @@ updateCount(newCount) {
 }
 
 
+}
+
+
+class MockTimelineObject {
+  public _id: number = 0;
+  private start: any;
+  private end: any;
+  constructor(start, end) {this._id ++; this.start = start; this.end = end; }
 }
