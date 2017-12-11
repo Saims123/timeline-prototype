@@ -36,7 +36,8 @@ input{
 }
 
 .seperator {
-    bottom:0;
+    padding-top: 3%;
+    border-left: 3px solid black;
 }
 
 ul {
@@ -66,4 +67,9 @@ article {
     position: relative;
     height: 100px;
     width: 10px;
+}
+
+h2{
+    font-size: 32px;
+    vertical-align: text-bottom;
 }

@@ -9,17 +9,17 @@
 		</ul>
 	</div>
 
-
-	<div></div>
-	<div (click)= "eventClick($event)">
+	<div (click)= "eventClick($event)" id="timeline">
 		<ul class="time" id="time"  (mousemove)= "findDataSector($event)">
 			<li *ngFor="let time of timelineTag">
-				<div class="seperator">
+
 					<time></time>
-				</div>
 			</li>
 		</ul>
 	</div>
+
+
+	<div class="slider"  [style.left.px]="slide" (mouseup)="eventUp()" (mousedown)="eventDown($event)" ></div>
 </div>
 
 
@@ -28,9 +28,6 @@
 	<input id="dataTag" [(ngModel)]="dataTag" />
 </article>
 
-<div>
-	
-</div>
+<h2>{{result}}</h2>
 
-<div class="slider"  [style.left.px]="slide" (mouseup)="eventUp()" (mousedown)="eventDown($event)" >
-</div>
+

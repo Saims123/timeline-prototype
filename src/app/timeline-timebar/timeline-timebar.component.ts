@@ -12,6 +12,7 @@ export class TimelineTimebarComponent implements OnInit {
   dataTag: any;
   slide: number;
   isDown = false;
+  result: string;
   private days: number;
   constructor() {
     this.days = 3;
@@ -21,9 +22,6 @@ export class TimelineTimebarComponent implements OnInit {
     this.timeline.forEach((item) => {
       this.timelineTag.push(item.toLocaleDateString() + ' ' + item.toLocaleTimeString());
     });
-    console.log(this.timelineTag);
-
-
     console.log(this.timeline);
   }
 
@@ -54,8 +52,9 @@ eventClick(e) {
   }
 
   findDataSector(e) {
-    this.dataTag = Math.floor(((e.screenX) / document.getElementById('time').clientWidth) * this.timeline.length);
-    console.log(e.screenX + ' // ' + e.target.clientWidth + ' // ' + document.getElementById('time').clientWidth);
+    this.dataTag = Math.floor(((e.clientX / document.getElementById('timeline').clientWidth)) * this.timeline.length - 1 );
+    console.log(e.screenX + ' // ' + e.clientX + ' // ' + e.target.clientWidth + ' // ' + document.getElementById('time').clientWidth);
+    this.result = this.timeline[this.dataTag];
   }
 
 }
