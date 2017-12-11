@@ -1,28 +1,33 @@
-<div>
-	<ul class="bar">
-		<li class="list" *ngFor="let day of dateline">
-			<div class="seperator">
-				<span> {{day}} </span>
-			</div>
-		</li>
-	</ul>
-</div>
-<div>
-	<ul class="bar">
-		<li class="list" *ngFor="let day of dateline">
-			<div class="seperator">
-				<span> {{day}} </span>
-			</div>
-		</li>
-	</ul>
+<div [style.display]='"block"'>
+	<div>
+		<ul class="bar">
+			<li *ngFor="let day of dateline">
+				<div class="seperator">
+					<span> {{day}} </span>
+				</div>
+			</li>
+		</ul>
+	</div>
+
+
+	<div></div>
+	<div>
+		<ul class="time" id="time">
+			<li *ngFor="let time of timelineTag">
+				<div class="seperator">
+					<time></time>
+				</div>
+			</li>
+		</ul>
+	</div>
 </div>
 
-<div class="time">
-	<ul class="container" *ngFor="let time of timeline">
-		<li class="list">
-			<div class="seperator">
-				{{time}}
-			</div>
-		</li>
-	</ul>
+
+
+<article>
+	<input id="dataTag" [(ngModel)]="dataTag" />
+</article>
+
+
+<div class="slider"  [style.left.px]="slide" (mousemove)="modifySliderPos($event)" (mouseup)="eventUp()" (mousedown)="eventDown($event)">
 </div>

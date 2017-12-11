@@ -20,12 +20,8 @@ import { AppRouting } from './routing.module/app-routing.module';
 import { LayerModule } from '@mo-map/layer';
 import { MoMapModule } from '@mo-map/core';
 import { TimelineTimebarComponent } from './timeline-timebar/timeline-timebar.component';
+import { DraggableDirective } from './timeline-timebar/draggable.directive';
 
-const appRoutes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full'},
-  { path: 'basic', component: BasicTimelineComponent},
-  { path: 'map', component: TimelineTestComponent },
-];
 
 
 @NgModule({
@@ -36,7 +32,8 @@ const appRoutes: Routes = [
     TimelineBarComponent,
     FooterComponent,
     TimelineTestComponent,
-    TimelineTimebarComponent
+    TimelineTimebarComponent,
+    DraggableDirective
   ],
   imports: [
     BrowserModule,
@@ -46,9 +43,7 @@ const appRoutes: Routes = [
     MoMapModule,
     CommonModule,
     BrowserAnimationsModule,
-    RouterModule.forRoot(
-      appRoutes
-    )
+    AppRouting
   ],
   providers: [SampleObjectsService, TimeControllerService],
   bootstrap: [AppComponent],

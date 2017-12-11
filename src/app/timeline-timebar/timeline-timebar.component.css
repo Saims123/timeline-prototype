@@ -1,35 +1,69 @@
 .bar{
     font-size: 30px;
-    height: 50px;
+    height: 50PX;
     list-style: none;
     border: 1px solid greenyellow;
-
+    position: absolute;
+    padding-top: 3%;
+    z-index: 8;
 }
+
+
+.time{
+    font-size: 30px;
+    height: 50px;
+    list-style: none;
+    border: 1px solid cornflowerblue;
+    position: absolute;
+    z-index: 9;
+}
+
 li{
     display:table-cell;
-    padding: 20px;
     margin-right: 2%;
     text-align: left;
-    top: 50%;
+    max-width: 5px;
+    border-left:1px dotted black;
     
 }
 li:hover{
     background-color: darkorange;
+
 }
 
 input{
     width: 90%;
 }
+
 .seperator {
-    border-left:1px dotted black;
+    bottom:0;
 }
 
 ul {
     display: table;
     padding: 0;
     width: 100%;
+    z-index: 1;
 }
 
 .container {
     border: 2px dotted black;
+    vertical-align: text-bottom;
+}
+
+div{
+    max-width: 100%;
+    position: relative;
+}
+
+article {
+        bottom: 0;
+        align-self: baseline;
+}
+.slider{
+    background-color: darkorange;
+    z-index: 10;
+    position: relative;
+    height: 100px;
+    width: 10px;
 }

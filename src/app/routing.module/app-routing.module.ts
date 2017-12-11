@@ -2,22 +2,23 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BasicTimelineComponent } from '../basic-timeline/basic-timeline.component';
 import { TimelineTestComponent } from '../timeline-test/timeline-test.component';
-import { LogService } from '@mo-map/core';
+import { TimelineTimebarComponent } from '../timeline-timebar/timeline-timebar.component';
 
 const appRoutes: Routes = [
-  { path: '/basic', component: BasicTimelineComponent },
-  { path: '/map', component: TimelineTestComponent},
+  { path: 'basic', component: BasicTimelineComponent },
+  { path: 'map', component: TimelineTestComponent},
+    { path: 'timeline', component: TimelineTimebarComponent},
 ];
 
 
 @NgModule({
   imports: [
-    RouterModule.forChild(appRoutes)
+    RouterModule.forRoot(appRoutes)
   ],
   exports: [
     RouterModule
   ],
-  providers: [LogService]
+  providers: []
 })
 export class AppRouting { }
 
