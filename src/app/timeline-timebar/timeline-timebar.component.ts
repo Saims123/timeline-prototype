@@ -18,10 +18,10 @@ export class TimelineTimebarComponent implements OnInit {
     this.dateline = new TimelineDateSystem(this.days).getDays();
     this.timeline = new TimelineDateSystem(this.days).timeline;
 
-   this.timeline.forEach((item) => {
-      this.timelineTag.push(item.toLocaleDateString()  + ' ' + item.toLocaleTimeString());
-   });
-   console.log(this.timelineTag);
+    this.timeline.forEach((item) => {
+      this.timelineTag.push(item.toLocaleDateString() + ' ' + item.toLocaleTimeString());
+    });
+    console.log(this.timelineTag);
 
 
     console.log(this.timeline);
@@ -33,25 +33,29 @@ export class TimelineTimebarComponent implements OnInit {
 
 
   eventDown(e) {
-      this.isDown = true;
-      this.modifySliderPos(e);
+    this.isDown = true;
+    this.modifySliderPos(e);
   }
+
+eventClick(e) {
+  this.isDown = true;
+  this.modifySliderPos(e);
+  this.isDown = false;
+}
+
   eventUp() {
     this.isDown = false;
   }
 
-
   modifySliderPos(e) {
-  e.preventDefault();
-  if (this.isDown) {
-  this.slide = e.clientX - 5;
-  console.log(this.slide);
+    if (this.isDown) {
+      this.slide = e.clientX - 10;
+    }
   }
-}
 
   findDataSector(e) {
-  this.dataTag = Math.floor(((e.offsetX / e.target.clientWidth)) * this.timeline.length);
-  console.log(e.offsetX + ' // ' +  e.target.clientWidth);
+    this.dataTag = Math.floor(((e.screenX) / document.getElementById('time').clientWidth) * this.timeline.length);
+    console.log(e.screenX + ' // ' + e.target.clientWidth + ' // ' + document.getElementById('time').clientWidth);
   }
 
 }

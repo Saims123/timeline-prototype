@@ -1,4 +1,4 @@
-<div [style.display]='"block"'>
+<div [style.display]='"block"' (mousemove)="modifySliderPos($event)">
 	<div>
 		<ul class="bar">
 			<li *ngFor="let day of dateline">
@@ -11,8 +11,8 @@
 
 
 	<div></div>
-	<div>
-		<ul class="time" id="time">
+	<div (click)= "eventClick($event)">
+		<ul class="time" id="time"  (mousemove)= "findDataSector($event)">
 			<li *ngFor="let time of timelineTag">
 				<div class="seperator">
 					<time></time>
@@ -28,6 +28,9 @@
 	<input id="dataTag" [(ngModel)]="dataTag" />
 </article>
 
+<div>
+	
+</div>
 
-<div class="slider"  [style.left.px]="slide" (mousemove)="modifySliderPos($event)" (mouseup)="eventUp()" (mousedown)="eventDown($event)">
+<div class="slider"  [style.left.px]="slide" (mouseup)="eventUp()" (mousedown)="eventDown($event)" >
 </div>

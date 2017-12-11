@@ -8,8 +8,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './home.component';
 import { BasicTimelineComponent } from './basic-timeline/basic-timeline.component';
-import { TimelineControlComponent } from './timeline-control/timeline-control.component';
-import { TimelineBarComponent } from './timeline-bar/timeline-bar.component';
+import { TimelineControlComponent } from './basic-timeline/timeline-control/timeline-control.component';
+import { TimelineBarComponent } from './basic-timeline/timeline-bar/timeline-bar.component';
 
 import { SampleObjectsService } from './timeline-objects/sample-objects.service';
 import { TimeControllerService } from './basic-timeline/time-controller/time-controller.service';
@@ -21,6 +21,7 @@ import { LayerModule } from '@mo-map/layer';
 import { MoMapModule } from '@mo-map/core';
 import { TimelineTimebarComponent } from './timeline-timebar/timeline-timebar.component';
 import { DraggableDirective } from './timeline-timebar/draggable.directive';
+import { PlaygroundComponent } from './playground/playground.component';
 
 
 
@@ -33,7 +34,8 @@ import { DraggableDirective } from './timeline-timebar/draggable.directive';
     FooterComponent,
     TimelineTestComponent,
     TimelineTimebarComponent,
-    DraggableDirective
+    DraggableDirective,
+    PlaygroundComponent
   ],
   imports: [
     BrowserModule,

@@ -22,6 +22,7 @@ export class DraggableDirective implements OnInit {
   @HostListener('document:mousemove', ['$event'])
   onMousemove(event) {
     this.mousemove.emit(event);
+    this.element.nativeElement.style.left.px = event.clientX;
   }
 
   constructor(public element: ElementRef) {
