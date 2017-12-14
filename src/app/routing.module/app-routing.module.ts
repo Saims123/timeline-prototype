@@ -7,9 +7,9 @@ import { PlaygroundComponent } from '../playground/playground.component';
 
 const appRoutes: Routes = [
   { path: 'basic', component: BasicTimelineComponent },
-  { path: 'map', component: TimelineTestComponent},
-    { path: 'timeline', component: TimelineTimebarComponent},
-    { path: 'playground', component: PlaygroundComponent},
+  { path: 'map', component: TimelineTestComponent },
+  { path: 'timeline', component: TimelineTimebarComponent },
+  { path: 'playground', component: PlaygroundComponent },
 ];
 
 

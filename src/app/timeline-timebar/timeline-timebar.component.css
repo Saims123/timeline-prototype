@@ -16,6 +16,7 @@
     border: 1px solid cornflowerblue;
     position: absolute;
     z-index: 9;
+    max-width: 100%;
 }
 
 li{
@@ -72,4 +73,5 @@ article {
 h2{
     font-size: 32px;
     vertical-align: text-bottom;
+    display: block;
 }

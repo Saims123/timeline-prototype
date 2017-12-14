@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { LogService } from '@mo-map/core';
+import { } from '@mo-map/core';
 @Component({
   selector: 'app-timeline-test',
   templateUrl: './timeline-test.component.html',
   styleUrls: ['./timeline-test.component.css'],
-  providers: [LogService]
+  providers: []
 })
 export class TimelineTestComponent implements OnInit {
 

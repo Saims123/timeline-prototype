@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges} from '@angular/core';
 
 @Component({
   selector: 'app-timeline-timebar',
   templateUrl: './timeline-timebar.component.html',
   styleUrls: ['./timeline-timebar.component.css']
 })
-export class TimelineTimebarComponent implements OnInit {
+export class TimelineTimebarComponent implements OnInit, OnChanges{
   timeline: any;
   timelineTag: string[] = [];
   dateline: any;
@@ -13,22 +13,39 @@ export class TimelineTimebarComponent implements OnInit {
   slide: number;
   isDown = false;
   result: string;
-  private days: number;
+  private days: number = 3;
+
   constructor() {
-    this.days = 3;
+    this.populateData();
+    console.log(this.timeline);
+  }
+
+  populateData() {
+    this.timelineTag = [];
     this.dateline = new TimelineDateSystem(this.days).getDays();
     this.timeline = new TimelineDateSystem(this.days).timeline;
 
     this.timeline.forEach((item) => {
       this.timelineTag.push(item.toLocaleDateString() + ' ' + item.toLocaleTimeString());
     });
-    console.log(this.timeline);
+       console.log(this.days);
   }
+
+increase() {
+  this.days ++;
+  this.ngOnChanges();
+}
+decrease() {
+    this.days --;
+    this.ngOnChanges();
+}
 
   ngOnInit() {
 
   }
-
+  ngOnChanges() {
+  this.populateData();
+  }
 
   eventDown(e) {
     this.isDown = true;
@@ -52,9 +69,14 @@ eventClick(e) {
   }
 
   findDataSector(e) {
-    this.dataTag = Math.floor(((e.clientX / document.getElementById('timeline').clientWidth)) * this.timeline.length - 1 );
+
+    this.dataTag =
+     Math.floor((((e.clientX - e.target.clientWidth) / document.getElementById('timeline').clientWidth)) * this.timeline.length);
     console.log(e.screenX + ' // ' + e.clientX + ' // ' + e.target.clientWidth + ' // ' + document.getElementById('time').clientWidth);
-    this.result = this.timeline[this.dataTag];
+    if (this.dataTag >= this.timeline.length) {
+      this.dataTag --;
+    }
+    this.result = this.dataTag + ' : ' +  this.timeline[this.dataTag];
   }
 
 }

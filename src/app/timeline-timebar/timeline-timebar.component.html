@@ -1,4 +1,16 @@
-<div [style.display]='"block"' (mousemove)="modifySliderPos($event)">
+<h2>{{result}}</h2>
+
+<div>
+	<label for="days">Numbers of days from now : {{days}}</label>
+	<input id="days" type="button" (click)="increase()" value="+">
+	<input id="days" type="button" (click)="decrease()" value="-">
+
+</div>
+
+
+
+
+<div (mousemove)="modifySliderPos($event)">
 	<div>
 		<ul class="bar">
 			<li *ngFor="let day of dateline">
@@ -9,25 +21,14 @@
 		</ul>
 	</div>
 
-	<div (click)= "eventClick($event)" id="timeline">
-		<ul class="time" id="time"  (mousemove)= "findDataSector($event)">
-			<li *ngFor="let time of timelineTag">
-
-					<time></time>
+	<div (click)="eventClick($event)" id="timeline">
+		<ul *ngIf="timelineTag" class="time" id="time" (mousemove)="findDataSector($event)">
+			<li class="timelist" *ngFor="let time of timelineTag">
+			<time> </time>
 			</li>
 		</ul>
 	</div>
 
 
-	<div class="slider"  [style.left.px]="slide" (mouseup)="eventUp()" (mousedown)="eventDown($event)" ></div>
+	<div class="slider" [style.left.px]="slide" (mouseup)="eventUp()" (mousedown)="eventDown($event)"></div>
 </div>
-
-
-
-<article>
-	<input id="dataTag" [(ngModel)]="dataTag" />
-</article>
-
-<h2>{{result}}</h2>
-
-
