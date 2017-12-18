@@ -5,24 +5,24 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { BasicTimelineComponent } from './basic-timeline/basic-timeline.component';
-import { TimelineControlComponent } from './timeline-control/timeline-control.component';
-import { TimelineBarComponent } from './timeline-bar/timeline-bar.component';
-import { TimelineTestComponent } from './timeline-test/timeline-test.component';
-import { LayerModule } from '@mo-map/layer';
-import { MoMapModule } from '@mo-map/core';
+import { TimelineControlComponent } from './basic-timeline/timeline-control/timeline-control.component';
+import { TimelineBarComponent } from './basic-timeline/timeline-bar/timeline-bar.component';
+//import { TimelineTestComponent } from './timeline-test/timeline-test.component';
+//import { LayerModule } from '@mo-map/layer';
+//import { MoMapModule } from '@mo-map/core';
 const appRoutes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'basic', component: BasicTimelineComponent },
-  { path: 'map', component: TimelineTestComponent },
+ // { path: 'map', component: TimelineTestComponent },
 ];
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent, BasicTimelineComponent, TimelineTestComponent, TimelineControlComponent, TimelineBarComponent
+        AppComponent, BasicTimelineComponent, TimelineControlComponent, TimelineBarComponent
       ],
-      imports: [BrowserModule, FormsModule, ReactiveFormsModule, RouterModule.forRoot(appRoutes), LayerModule, MoMapModule],
+      imports: [BrowserModule, FormsModule, ReactiveFormsModule, RouterModule.forRoot(appRoutes),],
       providers: [{provide: APP_BASE_HREF, useValue: '/'}, {provide: ComponentFixtureAutoDetect, userValue: true}]
     }).compileComponents();
   }));

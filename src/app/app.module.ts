@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FooterComponent } from '@mo/footer';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -13,12 +12,9 @@ import { TimelineBarComponent } from './basic-timeline/timeline-bar/timeline-bar
 
 import { SampleObjectsService } from './timeline-objects/sample-objects.service';
 import { TimeControllerService } from './basic-timeline/time-controller/time-controller.service';
-import { TimelineTestComponent } from './timeline-test/timeline-test.component';
+
 import { AppRouting } from './routing.module/app-routing.module';
 
-// Map Components
-import { LayerModule } from '@mo-map/layer';
-import { MoMapModule } from '@mo-map/core';
 import { TimelineTimebarComponent } from './timeline-timebar/timeline-timebar.component';
 import { DraggableDirective } from './timeline-timebar/draggable.directive';
 import { PlaygroundComponent } from './playground/playground.component';
@@ -31,8 +27,6 @@ import { PlaygroundComponent } from './playground/playground.component';
     BasicTimelineComponent,
     TimelineControlComponent,
     TimelineBarComponent,
-    FooterComponent,
-    TimelineTestComponent,
     TimelineTimebarComponent,
     DraggableDirective,
     PlaygroundComponent
@@ -41,8 +35,6 @@ import { PlaygroundComponent } from './playground/playground.component';
     BrowserModule,
     ReactiveFormsModule,
     FormsModule,
-    LayerModule,
-    MoMapModule,
     CommonModule,
     BrowserAnimationsModule,
     AppRouting

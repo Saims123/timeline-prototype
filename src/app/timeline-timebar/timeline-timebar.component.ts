@@ -13,6 +13,7 @@ export class TimelineTimebarComponent implements OnInit, OnChanges{
   slide: number;
   isDown = false;
   result: string;
+  timelineBarWidth: number;
   private days: number = 3;
 
   constructor() {
@@ -26,7 +27,7 @@ export class TimelineTimebarComponent implements OnInit, OnChanges{
     this.timeline = new TimelineDateSystem(this.days).timeline;
 
     this.timeline.forEach((item) => {
-      this.timelineTag.push(item.toLocaleDateString() + ' ' + item.toLocaleTimeString());
+      this.timelineTag.push(item.toLocaleDateString() + 'T' + item.toLocaleTimeString());
     });
        console.log(this.days);
   }
@@ -41,7 +42,6 @@ decrease() {
 }
 
   ngOnInit() {
-
   }
   ngOnChanges() {
   this.populateData();
@@ -63,26 +63,38 @@ eventClick(e) {
   }
 
   modifySliderPos(e) {
+      let diff = document.getElementById('timeline').getBoundingClientRect();
+      let small = document.getElementById('ayy').clientWidth;
+      //this.findDataSector(e);
     if (this.isDown) {
-      this.slide = e.clientX - 10;
+      this.slide = (((e.clientX - diff.left)  % diff.width) - 5)
     }
+    else if (!this.isDown){
+      this.slide = ((this.dataTag * (diff.width -  small)) / (this.timeline.length - 1)) - 8;
+
+    }
+
+    
   }
 
   findDataSector(e) {
+  this.timelineBarWidth = document.getElementById('timeline').offsetWidth;
+  let diff = document.getElementById('timeline').getBoundingClientRect();
+  //console.log(diff);
+    this.dataTag = 
+     Math.ceil(((((e.clientX )- e.target.offsetWidth - diff.left) / this.timelineBarWidth)) * this.timeline.length);
+      console.log(e.screenX + ' // ' + e.clientX + ' // ' + e.target.clientWidth + ' // ' + this.timelineBarWidth);
+      //console.log(window.innerWidth , document.getElementById('timeline').offsetWidth);
 
-    this.dataTag =
-     Math.floor((((e.clientX - e.target.clientWidth) / document.getElementById('timeline').clientWidth)) * this.timeline.length);
-    console.log(e.screenX + ' // ' + e.clientX + ' // ' + e.target.clientWidth + ' // ' + document.getElementById('time').clientWidth);
     if (this.dataTag >= this.timeline.length) {
       this.dataTag --;
-    }
-    this.result = this.dataTag + ' : ' +  this.timeline[this.dataTag];
+    } else if (this.dataTag <= 0 ) {
+        this.dataTag = 0;
+    }    
+    this.result = this.dataTag + ' : ' + this.timeline[Math.fround(this.dataTag)];
   }
 
 }
-
-
-
 
 
 
@@ -104,7 +116,7 @@ class TimelineDateSystem {
     for (let i = 0; i < step; i++) {
       this.day = Days[(this.clock.getDay() + i + 1) % 7];
       this.dateline.push(this.day);
-      for (let x = 0; x < 24; x++) {
+      for (let x = 0; x < 12; x++) {
         let time = new Date(this.clock.setHours(x)).setDate(this.clock.getDate() + i);
         this.timeline.push(new Date(time));
       }

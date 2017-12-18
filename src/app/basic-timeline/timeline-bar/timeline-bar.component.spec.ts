@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed, tick} from '@angular/core/testing';
-import { SampleObjectsService , SampleObject} from '../timeline-objects/sample-objects.service';
+import { SampleObjectsService , SampleObject} from '../../timeline-objects/sample-objects.service';
 import { TimelineBarComponent } from './timeline-bar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, By } from '@angular/platform-browser';
@@ -12,11 +12,11 @@ describe('TimelineBarComponent', () => {
   class MockSampleService extends SampleObjectsService { // Extended Override method
     constructor() {super();  }
     samples = [
-      new SampleObject('Test 1'),
-      new SampleObject('Test 2'),
-      new SampleObject('Test 3'),
-      new SampleObject('Test 4'),
-      new SampleObject('Test 5'),
+      new SampleObject(1, 'Test 1'),
+      new SampleObject(2, 'Test 2'),
+      new SampleObject(3, 'Test 3'),
+      new SampleObject(4, 'Test 4'),
+      new SampleObject(5, 'Test 5'),
     ];
 
     getSamples() {

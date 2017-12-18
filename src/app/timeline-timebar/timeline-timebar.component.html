@@ -4,6 +4,10 @@
 	<label for="days">Numbers of days from now : {{days}}</label>
 	<input id="days" type="button" (click)="increase()" value="+">
 	<input id="days" type="button" (click)="decrease()" value="-">
+	<div>
+		<label for="timeSection">Subsection Override: </label>
+		<input id="timeSection" type="text" (input)="modifySliderPos($event)" [(ngModel)]="dataTag">
+	</div>
 
 </div>
 
@@ -22,9 +26,9 @@
 	</div>
 
 	<div (click)="eventClick($event)" id="timeline">
-		<ul *ngIf="timelineTag" class="time" id="time" (mousemove)="findDataSector($event)">
-			<li class="timelist" *ngFor="let time of timelineTag">
-			<time> </time>
+		<ul *ngIf="timelineTag" class="time" (mousemove)="findDataSector($event)">
+			<li class="timelist" id="ayy" *ngFor="let time of timelineTag">
+				<time datetime="12:30"> </time>
 			</li>
 		</ul>
 	</div>

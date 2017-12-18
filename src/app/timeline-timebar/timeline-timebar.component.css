@@ -1,22 +1,24 @@
 .bar{
+    box-sizing: border-box;
     font-size: 30px;
-    height: 50PX;
+    height: 100px;
     list-style: none;
     border: 1px solid greenyellow;
     position: absolute;
     padding-top: 3%;
-    z-index: 8;
+    z-index: 9;
 }
 
 
 .time{
+    box-sizing: border-box;
     font-size: 30px;
     height: 50px;
     list-style: none;
     border: 1px solid cornflowerblue;
     position: absolute;
-    z-index: 9;
     max-width: 100%;
+    z-index: 9;
 }
 
 li{
@@ -31,11 +33,6 @@ li:hover{
     background-color: darkorange;
 
 }
-
-input{
-    width: 90%;
-}
-
 .seperator {
     padding-top: 3%;
     border-left: 3px solid black;
@@ -68,6 +65,10 @@ article {
     position: relative;
     height: 100px;
     width: 10px;
+
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 }
 
 h2{
