@@ -70,7 +70,7 @@ eventClick(e) {
       this.slide = (((e.clientX - diff.left)  % diff.width) - 5)
     }
     else if (!this.isDown){
-      this.slide = ((this.dataTag * (diff.width -  small)) / (this.timeline.length - 1)) - 8;
+      this.slide = ((this.dataTag * (diff.width -  small)) / (this.timeline.length - 1)) - 5;
 
     }
 
@@ -82,12 +82,12 @@ eventClick(e) {
   let diff = document.getElementById('timeline').getBoundingClientRect();
   //console.log(diff);
     this.dataTag = 
-     Math.ceil(((((e.clientX )- e.target.offsetWidth - diff.left) / this.timelineBarWidth)) * this.timeline.length);
+     Math.ceil(((((e.clientX )- (e.target.offsetWidth - diff.left) / 2) / this.timelineBarWidth)) * this.timeline.length);
       console.log(e.screenX + ' // ' + e.clientX + ' // ' + e.target.clientWidth + ' // ' + this.timelineBarWidth);
       //console.log(window.innerWidth , document.getElementById('timeline').offsetWidth);
 
     if (this.dataTag >= this.timeline.length) {
-      this.dataTag --;
+      //this.dataTag --;
     } else if (this.dataTag <= 0 ) {
         this.dataTag = 0;
     }    
@@ -116,7 +116,7 @@ class TimelineDateSystem {
     for (let i = 0; i < step; i++) {
       this.day = Days[(this.clock.getDay() + i + 1) % 7];
       this.dateline.push(this.day);
-      for (let x = 0; x < 12; x++) {
+      for (let x = 0; x < 2; x++) {
         let time = new Date(this.clock.setHours(x)).setDate(this.clock.getDate() + i);
         this.timeline.push(new Date(time));
       }
