@@ -1,11 +1,11 @@
-import { Component, OnInit, OnChanges} from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-timeline-timebar',
   templateUrl: './timeline-timebar.component.html',
   styleUrls: ['./timeline-timebar.component.css']
 })
-export class TimelineTimebarComponent implements OnInit, OnChanges{
+export class TimelineTimebarComponent implements OnInit, OnChanges {
   timeline: any;
   timelineTag: string[] = [];
   dateline: any;
@@ -29,22 +29,22 @@ export class TimelineTimebarComponent implements OnInit, OnChanges{
     this.timeline.forEach((item) => {
       this.timelineTag.push(item.toLocaleDateString() + 'T' + item.toLocaleTimeString());
     });
-       console.log(this.days);
+    console.log(this.days);
   }
 
-increase() {
-  this.days ++;
-  this.ngOnChanges();
-}
-decrease() {
-    this.days --;
+  increase() {
+    this.days++;
     this.ngOnChanges();
-}
+  }
+  decrease() {
+    this.days--;
+    this.ngOnChanges();
+  }
 
   ngOnInit() {
   }
   ngOnChanges() {
-  this.populateData();
+    this.populateData();
   }
 
   eventDown(e) {
@@ -52,45 +52,46 @@ decrease() {
     this.modifySliderPos(e);
   }
 
-eventClick(e) {
-  this.isDown = true;
-  this.modifySliderPos(e);
-  this.isDown = false;
-}
+  eventClick(e) {
+    this.isDown = true;
+    this.modifySliderPos(e);
+    this.isDown = false;
+  }
 
   eventUp() {
     this.isDown = false;
   }
 
   modifySliderPos(e) {
-      let diff = document.getElementById('timeline').getBoundingClientRect();
-      let small = document.getElementById('ayy').clientWidth;
-      //this.findDataSector(e);
+    let diff = document.getElementById('timeline').getBoundingClientRect();
+    let small = document.getElementById('ayy').clientWidth;
+    //this.findDataSector(e);
     if (this.isDown) {
-      this.slide = (((e.clientX - diff.left)  % diff.width) - 5)
+      this.slide = (((e.clientX - diff.left) % diff.width) - 5)
+       this.slide = ((this.dataTag * (diff.width - small)) / (this.timeline.length - 1)) - 5;
     }
-    else if (!this.isDown){
-      this.slide = ((this.dataTag * (diff.width -  small)) / (this.timeline.length - 1)) - 5;
+    else if (!this.isDown) {
+     
 
     }
 
-    
+
   }
 
   findDataSector(e) {
-  this.timelineBarWidth = document.getElementById('timeline').offsetWidth;
-  let diff = document.getElementById('timeline').getBoundingClientRect();
-  //console.log(diff);
-    this.dataTag = 
-     Math.ceil(((((e.clientX )- (e.target.offsetWidth - diff.left) / 2) / this.timelineBarWidth)) * this.timeline.length);
-      console.log(e.screenX + ' // ' + e.clientX + ' // ' + e.target.clientWidth + ' // ' + this.timelineBarWidth);
-      //console.log(window.innerWidth , document.getElementById('timeline').offsetWidth);
+    this.timelineBarWidth = document.getElementById('timeline').offsetWidth;
+    let diff = document.getElementById('timeline').getBoundingClientRect();
+    //console.log(diff);
+    this.dataTag =
+      Math.ceil(((((e.clientX) - (e.target.offsetWidth - diff.left) / 2) / this.timelineBarWidth)) * this.timeline.length);
+    //console.log(e.screenX + ' // ' + e.clientX + ' // ' + e.target.clientWidth + ' // ' + this.timelineBarWidth);
+    //console.log(window.innerWidth , document.getElementById('timeline').offsetWidth);
 
     if (this.dataTag >= this.timeline.length) {
       //this.dataTag --;
-    } else if (this.dataTag <= 0 ) {
-        this.dataTag = 0;
-    }    
+    } else if (this.dataTag <= 0) {
+      this.dataTag = 0;
+    }
     this.result = this.dataTag + ' : ' + this.timeline[Math.fround(this.dataTag)];
   }
 

@@ -12,8 +12,6 @@
 </div>
 
 
-
-
 <div (mousemove)="modifySliderPos($event)">
 	<div>
 		<ul class="bar">
@@ -26,9 +24,8 @@
 	</div>
 
 	<div (click)="eventClick($event)" id="timeline">
-		<ul *ngIf="timelineTag" class="time" (mousemove)="findDataSector($event)">
+		<ul *ngIf="timelineTag" class="time" (mouseup)="eventUp()" (mousemove)="findDataSector($event)">
 			<li class="timelist" id="ayy" *ngFor="let time of timelineTag">
-				<time datetime="12:30"> </time>
 			</li>
 		</ul>
 	</div>
