@@ -10,7 +10,7 @@ import { BasicTimelineComponent } from './basic-timeline/basic-timeline.componen
 import { TimelineControlComponent } from './basic-timeline/timeline-control/timeline-control.component';
 import { TimelineBarComponent } from './basic-timeline/timeline-bar/timeline-bar.component';
 
-import { SampleObjectsService } from './timeline-objects/sample-objects.service';
+import { SampleObjectsService , SampleTimeLineObjectsService} from './timeline-objects/sample-objects.service';
 import { TimeControllerService } from './basic-timeline/time-controller/time-controller.service';
 
 import { AppRouting } from './routing.module/app-routing.module';
@@ -39,7 +39,7 @@ import { PlaygroundComponent } from './playground/playground.component';
     BrowserAnimationsModule,
     AppRouting
   ],
-  providers: [SampleObjectsService, TimeControllerService],
+  providers: [SampleObjectsService, TimeControllerService, SampleTimeLineObjectsService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

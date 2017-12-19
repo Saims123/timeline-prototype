@@ -6,10 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./playground.component.css']
 })
 export class PlaygroundComponent implements OnInit {
+  public date: string;
 
-  constructor() { }
+  constructor() { 
+    this.date = new Date().toJSON();
+  }
 
   ngOnInit() {
+
+    
+
+
+
   }
 
 }

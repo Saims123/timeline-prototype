@@ -27,6 +27,7 @@ li{
     text-align: left;
     max-width: 5px;
     border-left:1px dotted black;
+    margin: 10%;
     
 }
 li:hover{

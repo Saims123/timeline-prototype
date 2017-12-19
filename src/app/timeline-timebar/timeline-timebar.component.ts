@@ -1,4 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
+import * as moment from 'moment';
+import {SampleTimeLineObjectsService} from '../timeline-objects/sample-objects.service';
 
 @Component({
   selector: 'app-timeline-timebar',
@@ -14,11 +16,11 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
   isDown = false;
   result: string;
   timelineBarWidth: number;
-  private days: number = 3;
+  protected days: number = 3;
 
-  constructor() {
+  constructor(public sample: SampleTimeLineObjectsService) {
     this.populateData();
-    console.log(this.timeline);
+    console.log(sample.getTargetSample(sample.timeline_sample[0].duration));
   }
 
   populateData() {
@@ -27,9 +29,9 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
     this.timeline = new TimelineDateSystem(this.days).timeline;
 
     this.timeline.forEach((item) => {
-      this.timelineTag.push(item.toLocaleDateString() + 'T' + item.toLocaleTimeString());
+      this.timelineTag.push(item.toJSON());
     });
-    console.log(this.days);
+    console.log(this.timelineTag);
   }
 
   increase() {
@@ -92,7 +94,7 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
     } else if (this.dataTag <= 0) {
       this.dataTag = 0;
     }
-    this.result = this.dataTag + ' : ' + this.timeline[Math.fround(this.dataTag)];
+    this.result = this.dataTag + ' : ' + this.timelineTag[Math.ceil(this.dataTag)];
   }
 
 }
@@ -117,7 +119,7 @@ class TimelineDateSystem {
     for (let i = 0; i < step; i++) {
       this.day = Days[(this.clock.getDay() + i + 1) % 7];
       this.dateline.push(this.day);
-      for (let x = 0; x < 2; x++) {
+      for (let x = 0; x < 12; x++) {
         let time = new Date(this.clock.setHours(x)).setDate(this.clock.getDate() + i);
         this.timeline.push(new Date(time));
       }
