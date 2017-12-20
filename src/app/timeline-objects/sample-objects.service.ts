@@ -38,16 +38,16 @@ export class SampleTimeLineObjectsService {
   public timeline_sample: any[] = [];
 
   constructor() {
-    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time1.png', moment().add(0, 'hour').toJSON()));
-    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time2.png', moment().add(1, 'hour').toJSON()));
-    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time3.png', moment().add(2, 'hour').toJSON()));
-    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time4.png', moment().add(3, 'hour').toJSON()));
-    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time5.png', moment().add(4, 'hour').toJSON()));
-    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time6.png', moment().add(5, 'hour').toJSON()));
-    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time7.png', moment().add(6, 'hour').toJSON()));
-    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time8.png', moment().add(7, 'hour').toJSON()));
-    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time9.png', moment().add(8, 'hour').toJSON()));
-    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time10.png', moment().add(9, 'hour').toJSON()));
+    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time1.PNG', moment().add(0, 'hour').toJSON()));
+    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time2.PNG', moment().add(1, 'hour').toJSON()));
+    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time3.PNG', moment().add(2, 'hour').toJSON()));
+    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time4.PNG', moment().add(3, 'hour').toJSON()));
+    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time5.PNG', moment().add(4, 'hour').toJSON()));
+    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time6.PNG', moment().add(5, 'hour').toJSON()));
+    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time7.PNG', moment().add(6, 'hour').toJSON()));
+    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time8.PNG', moment().add(7, 'hour').toJSON()));
+    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time9.PNG', moment().add(8, 'hour').toJSON()));
+    this.timeline_sample.push(new SampleObject('/assets/resources/timeline-images/Time10.PNG', moment().add(9, 'hour').toJSON()));
     SampleObject._id = 0;
 
     console.log(this.timeline_sample);
@@ -59,9 +59,19 @@ export class SampleTimeLineObjectsService {
 
   getTargetSample(date: any) {
     return this.timeline_sample.filter((data) => {
-      console.log(date);
         return data.duration === date;
-    }).pop();
+    });
+  }
+
+  getTimesteps() { 
+    return this.timeline_sample.map((data) => {
+      return data.duration;
+    });
+  }
+
+  calculateDayDiff() {
+    return moment(this.getTimesteps()[this.timeline_sample.length - 1]).day() - moment(this.getTimesteps()[0]).day() + 1;
+
   }
 
 }

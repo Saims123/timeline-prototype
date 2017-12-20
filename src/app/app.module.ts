@@ -18,7 +18,9 @@ import { AppRouting } from './routing.module/app-routing.module';
 import { TimelineTimebarComponent } from './timeline-timebar/timeline-timebar.component';
 import { DraggableDirective } from './timeline-timebar/draggable.directive';
 import { PlaygroundComponent } from './playground/playground.component';
-
+import { TimelinePlaygroundComponent} from './timeline-playground/timeline-playground.component';
+import { LoadingSpinnerService} from './timeline-playground/test-cdk.service';
+import {LoadingSpinnerComponent} from './timeline-playground/test-cdk.component';
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import { PlaygroundComponent } from './playground/playground.component';
     TimelineBarComponent,
     TimelineTimebarComponent,
     DraggableDirective,
-    PlaygroundComponent
+    PlaygroundComponent,
+    TimelinePlaygroundComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,8 +43,9 @@ import { PlaygroundComponent } from './playground/playground.component';
     BrowserAnimationsModule,
     AppRouting
   ],
-  providers: [SampleObjectsService, TimeControllerService, SampleTimeLineObjectsService],
+  providers: [SampleObjectsService, TimeControllerService, SampleTimeLineObjectsService, LoadingSpinnerService],
   bootstrap: [AppComponent],
+  entryComponents: [ LoadingSpinnerComponent ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

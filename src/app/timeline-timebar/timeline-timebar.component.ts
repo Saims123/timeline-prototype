@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import * as moment from 'moment';
-import {SampleTimeLineObjectsService} from '../timeline-objects/sample-objects.service';
+import { SampleTimeLineObjectsService } from '../timeline-objects/sample-objects.service';
 
 @Component({
   selector: 'app-timeline-timebar',
@@ -11,27 +11,32 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
   timeline: any;
   timelineTag: string[] = [];
   dateline: any;
-  dataTag: any;
+  dataTag = 0;
   slide: number;
   isDown = false;
   result: string;
   timelineBarWidth: number;
-  protected days: number = 3;
+  IMAGE: string;
+  protected days: number = 0;
 
   constructor(public sample: SampleTimeLineObjectsService) {
+    this.days = this.sample.calculateDayDiff();
     this.populateData();
-    console.log(sample.getTargetSample(sample.timeline_sample[0].duration));
+    this.result = this.dataTag + ' : ' + this.timelineTag[Math.ceil(this.dataTag)];
+        this.IMAGE = this.sample.getTargetSample(this.timelineTag[this.dataTag])[0].data;
   }
 
   populateData() {
     this.timelineTag = [];
+
+    //Modify Risk @1 
     this.dateline = new TimelineDateSystem(this.days).getDays();
-    this.timeline = new TimelineDateSystem(this.days).timeline;
+    //this.timeline = new TimelineDateSystem(this.days).timeline;
+    this.timeline = this.sample.getTimesteps();
 
     this.timeline.forEach((item) => {
-      this.timelineTag.push(item.toJSON());
+      this.timelineTag.push(item);
     });
-    console.log(this.timelineTag);
   }
 
   increase() {
@@ -43,8 +48,23 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
     this.ngOnChanges();
   }
 
+
+  increment() {
+    this.dataTag++;
+    this.dataTag %= this.timeline.length;
+      this.calculateSliderPos();
+  }
+
+  decrement() {
+    this.dataTag--;
+    this.dataTag = (this.dataTag >= 0 ? this.dataTag-- : this.timeline.length - 1);
+      this.calculateSliderPos();
+  }
+
+
   ngOnInit() {
   }
+
   ngOnChanges() {
     this.populateData();
   }
@@ -56,6 +76,7 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
 
   eventClick(e) {
     this.isDown = true;
+    console.log(this.IMAGE);
     this.modifySliderPos(e);
     this.isDown = false;
   }
@@ -66,17 +87,12 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
 
   modifySliderPos(e) {
     let diff = document.getElementById('timeline').getBoundingClientRect();
-    let small = document.getElementById('ayy').clientWidth;
+    let small = document.getElementById('subSection').clientWidth;
     //this.findDataSector(e);
     if (this.isDown) {
       this.slide = (((e.clientX - diff.left) % diff.width) - 5)
-       this.slide = ((this.dataTag * (diff.width - small)) / (this.timeline.length - 1)) - 5;
+      this.calculateSliderPos();
     }
-    else if (!this.isDown) {
-     
-
-    }
-
 
   }
 
@@ -96,6 +112,23 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
     }
     this.result = this.dataTag + ' : ' + this.timelineTag[Math.ceil(this.dataTag)];
   }
+
+
+
+  calculateSliderPos() {
+    let diff = document.getElementById('timeline').getBoundingClientRect();
+    let small = document.getElementById('subSection').clientWidth;
+    this.slide = ((this.dataTag * (diff.width - small)) / (this.timeline.length - 1)) - 5;
+    this.IMAGE = this.sample.getTargetSample(this.timelineTag[this.dataTag])[0].data;
+    this.result = this.dataTag + ' : ' + this.timelineTag[Math.ceil(this.dataTag)];
+  }
+
+
+looper(e) {
+  if (e = true) {
+     this.increment();
+  }
+}
 
 }
 
@@ -119,10 +152,14 @@ class TimelineDateSystem {
     for (let i = 0; i < step; i++) {
       this.day = Days[(this.clock.getDay() + i + 1) % 7];
       this.dateline.push(this.day);
+
+
       for (let x = 0; x < 12; x++) {
         let time = new Date(this.clock.setHours(x)).setDate(this.clock.getDate() + i);
         this.timeline.push(new Date(time));
       }
+
+
     }
     console.log(this.timeline);
   }

@@ -1,4 +1,4 @@
-<h2>{{result}}</h2>
+
 
 <div>
 	<label for="days">Numbers of days from now : {{days}}</label>
@@ -10,6 +10,13 @@
 	</div>
 
 </div>
+
+<div>
+<img [src]="IMAGE" style="width:400px; height: 500px;">
+<h2>{{result}}</h2>
+</div>
+
+<app-timeline-control (fastForward)="increment()" (backward)="decrement()" (Pulse)="looper($event)"> </app-timeline-control>
 
 <div (mousemove)="modifySliderPos($event)">
 	<div>
@@ -24,7 +31,7 @@
 
 	<div (click)="eventClick($event)" id="timeline">
 		<ul *ngIf="timelineTag" class="time" (mouseup)="eventUp()" (mousemove)="findDataSector($event)">
-			<li class="timelist" id="ayy" *ngFor="let time of timelineTag">
+			<li class="timelist" id="subSection" *ngFor="let time of timelineTag">
 
 			</li>
 		</ul>
