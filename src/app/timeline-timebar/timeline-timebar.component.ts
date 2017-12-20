@@ -10,6 +10,7 @@ import { SampleTimeLineObjectsService } from '../timeline-objects/sample-objects
 export class TimelineTimebarComponent implements OnInit, OnChanges {
   timeline: any;
   timelineTag: string[] = [];
+  tempDataTag: number;
   dateline: any;
   dataTag = 0;
   slide: number;
@@ -23,7 +24,7 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
     this.days = this.sample.calculateDayDiff();
     this.populateData();
     this.result = this.dataTag + ' : ' + this.timelineTag[Math.ceil(this.dataTag)];
-        this.IMAGE = this.sample.getTargetSample(this.timelineTag[this.dataTag])[0].data;
+    this.IMAGE = this.sample.getTargetSample(this.timelineTag[this.dataTag])[0].data;
   }
 
   populateData() {
@@ -52,13 +53,13 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
   increment() {
     this.dataTag++;
     this.dataTag %= this.timeline.length;
-      this.calculateSliderPos();
+    this.calculateSliderPos();
   }
 
   decrement() {
     this.dataTag--;
     this.dataTag = (this.dataTag >= 0 ? this.dataTag-- : this.timeline.length - 1);
-      this.calculateSliderPos();
+    this.calculateSliderPos();
   }
 
 
@@ -66,6 +67,7 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.timelineBarWidth = document.getElementById('timeline').offsetWidth;
     this.populateData();
   }
 
@@ -88,13 +90,22 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
   modifySliderPos(e) {
     let diff = document.getElementById('timeline').getBoundingClientRect();
     let small = document.getElementById('subSection').clientWidth;
-    //this.findDataSector(e);
+    this.findDataSector(e);
     if (this.isDown) {
       this.slide = (((e.clientX - diff.left) % diff.width) - 5)
       this.calculateSliderPos();
     }
 
   }
+
+  previewDataHover(e) {
+    let diff = document.getElementById('timeline').getBoundingClientRect();
+    this.tempDataTag =
+      Math.ceil(((((e.clientX) - (e.target.offsetWidth - diff.left) / 2) / this.timelineBarWidth)) * this.timeline.length);
+  }
+
+
+
 
   findDataSector(e) {
     this.timelineBarWidth = document.getElementById('timeline').offsetWidth;
@@ -124,11 +135,11 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
   }
 
 
-looper(e) {
-  if (e = true) {
-     this.increment();
+  looper(e) {
+    if (e = true) {
+      this.increment();
+    }
   }
-}
 
 }
 
