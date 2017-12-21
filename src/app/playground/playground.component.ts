@@ -1,4 +1,4 @@
-import { Component, OnInit, NgModule, VERSION } from '@angular/core';
+import { Component, OnInit, NgModule, VERSION, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { LoadingSpinnerService } from '../timeline-playground/test-cdk.service';
 import { LoadingSpinnerComponent } from '../timeline-playground/test-cdk.component';
 @Component({
@@ -6,15 +6,20 @@ import { LoadingSpinnerComponent } from '../timeline-playground/test-cdk.compone
   templateUrl: './playground.component.html',
   styleUrls: ['./playground.component.css']
 })
-export class PlaygroundComponent implements OnInit {
+export class PlaygroundComponent implements OnInit, AfterViewInit {
   public date: string;
 
-  constructor(private loading: LoadingSpinnerService) {
+  constructor(private loading: LoadingSpinnerService, private cd: ChangeDetectorRef) {
     this.date = new Date().toJSON();
   }
 
   ngOnInit() {
+
+    
+  }
+  ngAfterViewInit() {
     this.loadData();
+    this.cd.detectChanges();
   }
 
 

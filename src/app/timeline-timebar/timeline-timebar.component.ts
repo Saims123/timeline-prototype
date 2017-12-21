@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, AfterViewInit } from '@angular/core';
 import * as moment from 'moment';
 import { SampleTimeLineObjectsService } from '../timeline-objects/sample-objects.service';
 
@@ -7,37 +7,55 @@ import { SampleTimeLineObjectsService } from '../timeline-objects/sample-objects
   templateUrl: './timeline-timebar.component.html',
   styleUrls: ['./timeline-timebar.component.css']
 })
-export class TimelineTimebarComponent implements OnInit, OnChanges {
-  timeline: any;
-  timelineTag: string[] = [];
-  tempDataTag: number;
+export class TimelineTimebarComponent implements OnInit, OnChanges, AfterViewInit{
+  timeline: any[] = [];
   dateline: any;
+
+  tempDataTag: any;
   dataTag = 0;
+  initiate = false;
   slide: number;
   isDown = false;
+
   result: string;
-  timelineBarWidth: number;
+  timelineBar: any;
   IMAGE: string;
   protected days: number = 0;
 
   constructor(public sample: SampleTimeLineObjectsService) {
     this.days = this.sample.calculateDayDiff();
     this.populateData();
-    this.result = this.dataTag + ' : ' + this.timelineTag[Math.ceil(this.dataTag)];
-    this.IMAGE = this.sample.getTargetSample(this.timelineTag[this.dataTag])[0].data;
+    //this.result = this.dataTag + ' : ' + this.timeline[Math.ceil(this.dataTag)];
+    //this.IMAGE = this.sample.getTargetSample(this.timeline[this.dataTag])[0].data;
+    
   }
 
+
+  ngOnInit() {
+        //this.timelineBar = document.getElementById('timeline').getBoundingClientRect();
+        this.initiate = true;
+  }
+
+  
+  ngOnChanges() {
+    this.populateData();
+        this.timelineBar = document.getElementById('timeline').getBoundingClientRect();
+
+  }
+
+  ngAfterViewInit() {
+        this.calculateSliderPos();
+  }
+
+
+
   populateData() {
-    this.timelineTag = [];
+    this.timeline = [];
 
     //Modify Risk @1 
     this.dateline = new TimelineDateSystem(this.days).getDays();
     //this.timeline = new TimelineDateSystem(this.days).timeline;
     this.timeline = this.sample.getTimesteps();
-
-    this.timeline.forEach((item) => {
-      this.timelineTag.push(item);
-    });
   }
 
   increase() {
@@ -63,14 +81,6 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
   }
 
 
-  ngOnInit() {
-  }
-
-  ngOnChanges() {
-    this.timelineBarWidth = document.getElementById('timeline').offsetWidth;
-    this.populateData();
-  }
-
   eventDown(e) {
     this.isDown = true;
     this.modifySliderPos(e);
@@ -85,55 +95,51 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
 
   eventUp() {
     this.isDown = false;
+    this.tempDataTag = this.dataTag;
   }
 
   modifySliderPos(e) {
-    let diff = document.getElementById('timeline').getBoundingClientRect();
     let small = document.getElementById('subSection').clientWidth;
-    this.findDataSector(e);
     if (this.isDown) {
-      this.slide = (((e.clientX - diff.left) % diff.width) - 5)
-      this.calculateSliderPos();
+       this.dataTag =
+      Math.ceil(((((e.clientX) - (e.target.offsetWidth - this.timelineBar.left) / 2) / this.timelineBar.width)) * this.timeline.length);
+       this.slide = ((this.dataTag * (this.timelineBar.width - small)) / (this.timeline.length - 1)) - 5;
+       //this.slide = (((e.clientX - this.timelineBar.left) % this.timelineBar.width) - 5)
+      
     }
-
   }
 
   previewDataHover(e) {
-    let diff = document.getElementById('timeline').getBoundingClientRect();
     this.tempDataTag =
-      Math.ceil(((((e.clientX) - (e.target.offsetWidth - diff.left) / 2) / this.timelineBarWidth)) * this.timeline.length);
+      Math.ceil(((((e.clientX) - (e.target.offsetWidth - this.timelineBar.left) / 2) / this.timelineBar.width)) * this.timeline.length);
+      // this.IMAGE = this.sample.getTargetSample(this.timeline[this.tempDataTag])[0].data;
+    this.result = this.tempDataTag + ' : ' + this.timeline[Math.ceil(this.tempDataTag)];
   }
 
-
-
+  revealResult(){
+    this.result = this.dataTag + ' : ' + this.timeline[Math.ceil(this.dataTag)];
+    this.IMAGE = this.sample.getTargetSample(this.timeline[this.dataTag])[0].data;
+  }
 
   findDataSector(e) {
-    this.timelineBarWidth = document.getElementById('timeline').offsetWidth;
-    let diff = document.getElementById('timeline').getBoundingClientRect();
-    //console.log(diff);
     this.dataTag =
-      Math.ceil(((((e.clientX) - (e.target.offsetWidth - diff.left) / 2) / this.timelineBarWidth)) * this.timeline.length);
-    //console.log(e.screenX + ' // ' + e.clientX + ' // ' + e.target.clientWidth + ' // ' + this.timelineBarWidth);
-    //console.log(window.innerWidth , document.getElementById('timeline').offsetWidth);
-
+      Math.ceil(((((e.clientX) - (e.target.offsetWidth - this.timelineBar.left) / 2) / this.timelineBar.width)) * this.timeline.length);
     if (this.dataTag >= this.timeline.length) {
       //this.dataTag --;
     } else if (this.dataTag <= 0) {
       this.dataTag = 0;
     }
-    this.result = this.dataTag + ' : ' + this.timelineTag[Math.ceil(this.dataTag)];
+    this.revealResult();
+        //console.log(e.screenX + ' // ' + e.clientX + ' // ' + e.target.clientWidth + ' // ' + this.timelineBar);
+    //console.log(window.innerWidth , document.getElementById('timeline').offsetWidth);
   }
-
-
 
   calculateSliderPos() {
-    let diff = document.getElementById('timeline').getBoundingClientRect();
+    this.timelineBar = document.getElementById('timeline').getBoundingClientRect();
     let small = document.getElementById('subSection').clientWidth;
-    this.slide = ((this.dataTag * (diff.width - small)) / (this.timeline.length - 1)) - 5;
-    this.IMAGE = this.sample.getTargetSample(this.timelineTag[this.dataTag])[0].data;
-    this.result = this.dataTag + ' : ' + this.timelineTag[Math.ceil(this.dataTag)];
+    this.slide = ((this.dataTag * (this.timelineBar.width - small)) / (this.timeline.length - 1)) - 5;
+    //this.revealResult();
   }
-
 
   looper(e) {
     if (e = true) {
@@ -142,6 +148,17 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

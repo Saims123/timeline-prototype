@@ -3,14 +3,13 @@ import {
   Output,
   EventEmitter,
   AfterViewInit,
-  ChangeDetectorRef,
-  OnChanges
+  OnChanges, OnInit
 } from '@angular/core';
 @Component({
   selector: 'loading-spinner',
   template: `
     <div class="wrapper">
-      <h2>Lo0ading . . . </h2>
+      <h2>{{text}}}</h2>
     </div>
   `,
   styles: [`
@@ -29,19 +28,22 @@ import {
     }
   `]
 })
-export class LoadingSpinnerComponent implements AfterViewInit, OnChanges{ 
-@Output() close: EventEmitter<any> = new EventEmitter<any>(); 
+export class LoadingSpinnerComponent implements AfterViewInit, OnInit{ 
 
+text: string;
 constructor() {
 }
 ngAfterViewInit() {
-    //     this.text = 'Loading';
-    // console.log(this.text)
-    // setInterval(() => { this.text += " . "}, 1000)
+  setTimeout(() => {
+    this.text = 'Loading';
+     console.log(this.text)
+   setInterval(() => { this.text += " . "}, 1000)
+  });
 }
 
-ngOnChanges(change) {
-    console.log(change);
+ngOnInit() {
+
+
 }
 
 }

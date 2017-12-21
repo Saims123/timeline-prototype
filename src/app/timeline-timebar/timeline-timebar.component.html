@@ -29,9 +29,9 @@
 		</ul>
 	</div>
 
-	<div (click)="eventClick($event)" id="timeline">
-		<ul *ngIf="timelineTag" class="time" (mouseup)="eventUp()" (mousemove)="findDataSector($event)" (window:resize)="findDataSector($event)">
-			<li class="timelist" id="subSection" *ngFor="let time of timelineTag">
+	<div (click)="eventClick($event)" (mousemove)="previewDataHover($event)" id="timeline">
+		<ul *ngIf="timeline" class="time" (mouseup)="eventUp()" (click)="findDataSector($event)" (mouseleave)="revealResult()" (window:resize)="calculateSliderPos()">
+			<li class="timelist" id="subSection" *ngFor="let time of timeline">
 
 			</li>
 		</ul>
