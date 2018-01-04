@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { AppComponent } from './home.component';
@@ -19,8 +18,8 @@ import { TimelineTimebarComponent } from './timeline-timebar/timeline-timebar.co
 import { DraggableDirective } from './timeline-timebar/draggable.directive';
 import { PlaygroundComponent } from './playground/playground.component';
 import { TimelinePlaygroundComponent} from './timeline-playground/timeline-playground.component';
-import { LoadingSpinnerService} from './timeline-playground/test-cdk.service';
-import {LoadingSpinnerComponent} from './timeline-playground/test-cdk.component';
+import { LoadingSpinnerService} from './playground/test-cdk.service';
+import {LoadingSpinnerComponent} from './playground/test-cdk.component';
 
 
 @NgModule({

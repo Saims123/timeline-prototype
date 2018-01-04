@@ -17,8 +17,6 @@ export class BasicTimelineComponent implements OnInit {
   constructor(private sample: SampleObjectsService) {
       this.maxCount = sample.samples.length;
       this.obj = sample.getSamples();
-      let a = new MockTimelineObject(new Date(), new Date());
-      console.log(JSON.stringify(a));
   }
   ngOnInit() {
 

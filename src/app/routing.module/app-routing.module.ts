@@ -4,11 +4,13 @@ import { BasicTimelineComponent } from '../basic-timeline/basic-timeline.compone
 //import { TimelineTestComponent } from '../timeline-test/timeline-test.component';
 import { TimelineTimebarComponent } from '../timeline-timebar/timeline-timebar.component';
 import { PlaygroundComponent } from '../playground/playground.component';
+import { TimelinePlaygroundComponent } from '../timeline-playground/timeline-playground.component';
 
 const appRoutes: Routes = [
   { path: 'basic', component: BasicTimelineComponent },
  //{ path: 'map', component: TimelineTestComponent },
   { path: 'timeline', component: TimelineTimebarComponent },
+  {path: 'proto', component: TimelinePlaygroundComponent},
   { path: 'playground', component: PlaygroundComponent },
 ];
 

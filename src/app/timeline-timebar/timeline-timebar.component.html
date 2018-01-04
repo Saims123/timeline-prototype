@@ -1,24 +1,25 @@
 
 
-<div>
+<!--<div>
 	<label for="days">Numbers of days from now : {{days}}</label>
 	<input id="days" type="button" (click)="increase()" value="+">
-	<input id="days" type="button" (click)="decrease()" value="-">
+	<input type="button" (click)="decrease()" value="-">
 	<div>
 		<label for="timeSection">Subsection Override: </label>
 		<input id="timeSection" type="text" (input)="modifySliderPos($event)" [(ngModel)]="dataTag">
+
 	</div>
 
-</div>
+</div>-->
 
-<div>
+<!--<div>
 <img [src]="IMAGE" style="width:400px; height: 500px;">
 <h2>{{result}}</h2>
-</div>
+</div>-->
 
-<app-timeline-control (fastForward)="increment()" (backward)="decrement()" (Pulse)="looper($event)"> </app-timeline-control>
+<!--<app-timeline-control (fastForward)="increment()" (backward)="decrement()" (Pulse)="looper($event)"> </app-timeline-control>-->
 
-<div (mousemove)="modifySliderPos($event)">
+<div (mousemove)="modifySliderPos($event)" cdkTrapFocus>
 	<div>
 		<ul class="bar">
 			<li *ngFor="let day of dateline">

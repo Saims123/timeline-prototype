@@ -1,41 +1,37 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 @Injectable()
 export class TimeControllerService {
-  private timeInterval = 1; // By default
-  private intervalId = 0;
-  private timeRange = 0;
-  private currentTime = 0;
-  private isPlay: false;
-
+  private isPlay: boolean;
+  private isSpeed: boolean;
+  public flowControl$ = new EventEmitter<FlowControl>();
+  public playPauseSpeedControl$ = new EventEmitter();
   constructor() {
+    this.isPlay = false;
+    this.isSpeed = false;
   }
 
-  clearTimer() {
-    clearInterval(this.intervalId);
+  startPlayer() {
+    this.isPlay = true;
+    
   }
 
-  startTimer() {
-    this.clearTimer();
-    this.intervalId = window.setInterval(() => {
+  pausePlayer() {
 
-      if (this.currentTime > this.timeRange) {
-        this.currentTime = 0;
-      }
-      this.currentTime++;
-    }, this.timeInterval * 1000);
   }
 
-  changeTime(num) {
-    this.currentTime += num;
-  }
+broadcastControlEvent() {
+  this.playPauseSpeedControl$.emit(
+    {
+      play: this.isPlay,
+      speed: this.isSpeed,
+    }
+  );
+}
 
-  setTimeRange(num) {
-    this.timeRange = num;
-  }
 
-  setTimeInterval(num) {
-    this.timeInterval = num;
-  }
-
+}
+enum FlowControl {
+  FastForward = 1, Backward
+  = -1
 }

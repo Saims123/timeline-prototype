@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, OnInit, DoCheck, OnChanges, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
 import { SampleTimeLineObjectsService } from '../timeline-objects/sample-objects.service';
 
@@ -7,10 +7,9 @@ import { SampleTimeLineObjectsService } from '../timeline-objects/sample-objects
   templateUrl: './timeline-timebar.component.html',
   styleUrls: ['./timeline-timebar.component.css']
 })
-export class TimelineTimebarComponent implements OnInit, OnChanges, AfterViewInit{
+export class TimelineTimebarComponent implements OnInit, OnChanges {
   timeline: any[] = [];
   dateline: any;
-
   tempDataTag: any;
   dataTag = 0;
   initiate = false;
@@ -20,42 +19,40 @@ export class TimelineTimebarComponent implements OnInit, OnChanges, AfterViewIni
   result: string;
   timelineBar: any;
   IMAGE: string;
-  protected days: number = 0;
-
-  constructor(public sample: SampleTimeLineObjectsService) {
+  public days = 0;
+  @Input() timeData: any[] = [];
+  @Output() selected = new EventEmitter<any>();
+  constructor(public sample: SampleTimeLineObjectsService, public cdr: ChangeDetectorRef) {
     this.days = this.sample.calculateDayDiff();
     this.populateData();
-    //this.result = this.dataTag + ' : ' + this.timeline[Math.ceil(this.dataTag)];
-    //this.IMAGE = this.sample.getTargetSample(this.timeline[this.dataTag])[0].data;
-    
+
   }
 
 
   ngOnInit() {
-        //this.timelineBar = document.getElementById('timeline').getBoundingClientRect();
-        this.initiate = true;
+    this.timelineBar = document.getElementById('timeline').getBoundingClientRect();
+    this.initiate = true;
+    this.revealResult();
+    // this.result = this.dataTag + ' : ' + this.timeline[Math.ceil(this.dataTag)];
+    // this.IMAGE = this.sample.getTargetSample(this.timeline[this.dataTag])[0].data;
+
   }
 
-  
+
   ngOnChanges() {
     this.populateData();
-        this.timelineBar = document.getElementById('timeline').getBoundingClientRect();
+    this.timelineBar = document.getElementById('timeline').getBoundingClientRect();
 
   }
-
-  ngAfterViewInit() {
-        this.calculateSliderPos();
-  }
-
-
 
   populateData() {
     this.timeline = [];
 
-    //Modify Risk @1 
+
+    //Modify Risk @1
     this.dateline = new TimelineDateSystem(this.days).getDays();
     //this.timeline = new TimelineDateSystem(this.days).timeline;
-    this.timeline = this.sample.getTimesteps();
+    this.timeline = this.timeData;
   }
 
   increase() {
@@ -101,25 +98,28 @@ export class TimelineTimebarComponent implements OnInit, OnChanges, AfterViewIni
   modifySliderPos(e) {
     let small = document.getElementById('subSection').clientWidth;
     if (this.isDown) {
-       this.dataTag =
-      Math.ceil(((((e.clientX) - (e.target.offsetWidth - this.timelineBar.left) / 2) / this.timelineBar.width)) * this.timeline.length);
-       this.slide = ((this.dataTag * (this.timelineBar.width - small)) / (this.timeline.length - 1)) - 5;
-       //this.slide = (((e.clientX - this.timelineBar.left) % this.timelineBar.width) - 5)
-      
+      this.dataTag =
+        Math.ceil(((((e.clientX) - (e.target.offsetWidth - this.timelineBar.left) / 2) / this.timelineBar.width)) * this.timeline.length);
+      this.slide = ((this.dataTag * (this.timelineBar.width - small)) / (this.timeline.length - 1)) - 5;
+      //this.slide = (((e.clientX - this.timelineBar.left) % this.timelineBar.width) - 5)
+      this.calculateSliderPos();
     }
   }
 
   previewDataHover(e) {
     this.tempDataTag =
       Math.ceil(((((e.clientX) - (e.target.offsetWidth - this.timelineBar.left) / 2) / this.timelineBar.width)) * this.timeline.length);
-      // this.IMAGE = this.sample.getTargetSample(this.timeline[this.tempDataTag])[0].data;
+    // this.IMAGE = this.sample.getTargetSample(this.timeline[this.tempDataTag])[0].data;
     this.result = this.tempDataTag + ' : ' + this.timeline[Math.ceil(this.tempDataTag)];
   }
 
-  revealResult(){
+  revealResult() {
     this.result = this.dataTag + ' : ' + this.timeline[Math.ceil(this.dataTag)];
-    this.IMAGE = this.sample.getTargetSample(this.timeline[this.dataTag])[0].data;
+    let data = {id : this.dataTag , data : this.timeline[this.dataTag]};
+    this.selected.emit(data);
+    
   }
+
 
   findDataSector(e) {
     this.dataTag =
@@ -130,7 +130,7 @@ export class TimelineTimebarComponent implements OnInit, OnChanges, AfterViewIni
       this.dataTag = 0;
     }
     this.revealResult();
-        //console.log(e.screenX + ' // ' + e.clientX + ' // ' + e.target.clientWidth + ' // ' + this.timelineBar);
+    //console.log(e.screenX + ' // ' + e.clientX + ' // ' + e.target.clientWidth + ' // ' + this.timelineBar);
     //console.log(window.innerWidth , document.getElementById('timeline').offsetWidth);
   }
 
@@ -138,7 +138,7 @@ export class TimelineTimebarComponent implements OnInit, OnChanges, AfterViewIni
     this.timelineBar = document.getElementById('timeline').getBoundingClientRect();
     let small = document.getElementById('subSection').clientWidth;
     this.slide = ((this.dataTag * (this.timelineBar.width - small)) / (this.timeline.length - 1)) - 5;
-    //this.revealResult();
+    this.revealResult();
   }
 
   looper(e) {
@@ -178,7 +178,7 @@ class TimelineDateSystem {
   constructor(step) {
 
     for (let i = 0; i < step; i++) {
-      this.day = Days[(this.clock.getDay() + i + 1) % 7];
+      this.day = Days[(this.clock.getDay() + i) % 7];
       this.dateline.push(this.day);
 
 

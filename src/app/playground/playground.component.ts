@@ -1,12 +1,12 @@
 import { Component, OnInit, NgModule, VERSION, ChangeDetectorRef, AfterViewInit } from '@angular/core';
-import { LoadingSpinnerService } from '../timeline-playground/test-cdk.service';
-import { LoadingSpinnerComponent } from '../timeline-playground/test-cdk.component';
+import { LoadingSpinnerService } from './test-cdk.service';
+import { LoadingSpinnerComponent } from './test-cdk.component';
 @Component({
   selector: 'app-playground',
   templateUrl: './playground.component.html',
   styleUrls: ['./playground.component.css']
 })
-export class PlaygroundComponent implements OnInit, AfterViewInit {
+export class PlaygroundComponent implements OnInit {
   public date: string;
 
   constructor(private loading: LoadingSpinnerService, private cd: ChangeDetectorRef) {
@@ -14,15 +14,10 @@ export class PlaygroundComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
-    
-  }
-  ngAfterViewInit() {
-    this.loadData();
+        this.loadData();
     this.cd.detectChanges();
   }
-
-
+  
   loadData() {
     this.loading.reveal();
     setTimeout(() => {
