@@ -1,6 +1,7 @@
-import { Component, OnInit, DoCheck, OnChanges, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, DoCheck, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import * as moment from 'moment';
 import { SampleTimeLineObjectsService } from '../timeline-objects/sample-objects.service';
+import { TimeControllerService } from '../basic-timeline/time-controller/time-controller.service';
 
 @Component({
   selector: 'app-timeline-timebar',
@@ -12,17 +13,19 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
   dateline: any;
   tempDataTag: any;
   dataTag = 0;
-  initiate = false;
   slide: number;
   isDown = false;
-
-  result: string;
   timelineBar: any;
-  IMAGE: string;
+
+  timeControlSubscription: any;
+  testSub: any;
+
+
   public days = 0;
   @Input() timeData: any[] = [];
   @Output() selected = new EventEmitter<any>();
-  constructor(public sample: SampleTimeLineObjectsService, public cdr: ChangeDetectorRef) {
+
+  constructor(private sample: SampleTimeLineObjectsService, private timeControl: TimeControllerService) {
     this.days = this.sample.calculateDayDiff();
     this.populateData();
 
@@ -31,8 +34,18 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.timelineBar = document.getElementById('timeline').getBoundingClientRect();
-    this.initiate = true;
     this.revealResult();
+
+    this.timeControlSubscription = this.timeControl.forwardBackwardControl$.subscribe((data) => {
+      this.forwardBackwardControl(data);
+      console.log('TimelineBar : ', data);
+    });
+
+    this.testSub = this.timeControl.timerTickControl$.subscribe((data) => {
+      if (data) {
+        this.increment();
+      }
+    });
     // this.result = this.dataTag + ' : ' + this.timeline[Math.ceil(this.dataTag)];
     // this.IMAGE = this.sample.getTargetSample(this.timeline[this.dataTag])[0].data;
 
@@ -55,15 +68,24 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
     this.timeline = this.timeData;
   }
 
+  //To be removed
   increase() {
     this.days++;
     this.ngOnChanges();
   }
+  //To be removed
   decrease() {
     this.days--;
     this.ngOnChanges();
   }
 
+  forwardBackwardControl(state) {
+    if (state == 1) {
+      this.increment();
+    } else {
+      this.decrement();
+    }
+  }
 
   increment() {
     this.dataTag++;
@@ -85,7 +107,6 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
 
   eventClick(e) {
     this.isDown = true;
-    console.log(this.IMAGE);
     this.modifySliderPos(e);
     this.isDown = false;
   }
@@ -109,15 +130,15 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
   previewDataHover(e) {
     this.tempDataTag =
       Math.ceil(((((e.clientX) - (e.target.offsetWidth - this.timelineBar.left) / 2) / this.timelineBar.width)) * this.timeline.length);
+    let data = { id: this.tempDataTag, data: this.timeline[this.tempDataTag] };
+    this.selected.emit(data);
     // this.IMAGE = this.sample.getTargetSample(this.timeline[this.tempDataTag])[0].data;
-    this.result = this.tempDataTag + ' : ' + this.timeline[Math.ceil(this.tempDataTag)];
   }
 
   revealResult() {
-    this.result = this.dataTag + ' : ' + this.timeline[Math.ceil(this.dataTag)];
-    let data = {id : this.dataTag , data : this.timeline[this.dataTag]};
+    let data = { id: this.dataTag, data: this.timeline[this.dataTag] };
     this.selected.emit(data);
-    
+
   }
 
 
