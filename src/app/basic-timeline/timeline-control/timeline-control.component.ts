@@ -26,35 +26,51 @@ export class TimelineControlComponent implements OnInit, OnChanges, OnDestroy {
   timeInterval = 1000;
   speedModifier = 2;
   ngOnInit() {
-    this.timeControlSubscription = this.timeControl.playPauseSpeedControl$.subscribe((data) => {
-      this.isPlay = data.play;
-      this.onSpeed = data.speed;
-      console.log('TimeController : ', data);
-    });
-
-    this.timeControlSubscription = this.timeControl.forwardBackwardControl$.subscribe((data) => {
-      console.log('TimeControllerSpeed : ', data);
-    });
+    this.timelineControlSub();
+    this.timelineControlForthBackSub();
+    this.loopTest();
   }
   ngOnChanges() {
-    this.timeControlSubscription = this.timeControl.playPauseSpeedControl$.subscribe((data) => {
-      this.isPlay = data.play;
-      this.onSpeed = data.speed;
-      console.log('TimeController : ', data);
-    });
+    this.timelineControlSub();
+    this.timelineControlForthBackSub();
 
-    this.timeControlSubscription = this.timeControl.forwardBackwardControl$.subscribe((data) => {
-      console.log('TimeControllerSpeed : ', data);
-    });
   }
 
   ngOnDestroy() {
     this.timeControlSubscription.unsubscribe();
-
   }
+
+
+  timelineControlSub() {
+    this.timeControlSubscription = this.timeControl.playPauseSpeedControl$.subscribe((data) => {
+      this.isPlay = data.play;
+      this.onSpeed = data.speed;
+      console.log('TimeController : ', data);
+    });
+  }
+
+  timelineControlForthBackSub() {
+    this.timeControlSubscription = this.timeControl.forwardBackwardControl$.subscribe((data) => {
+      console.log('TimeControllerSpeed : ', data);
+    });
+  }
+
+
+
 
   play() {
     this.isPlay = !this.isPlay;
+    if (this.isPlay) {
+      this.timeControl.startPlayer();
+    } else {
+      this.timeControl.pausePlayer();
+    }
+    this.playPauseStatus();
+    this.onPlay.emit(this.isPlay);
+    this.loopTest();
+  }
+
+  playPauseStatus() {
     if (this.isPlay) {
       this.status = 'Pause';
       this.timeControl.startPlayer();
@@ -62,8 +78,6 @@ export class TimelineControlComponent implements OnInit, OnChanges, OnDestroy {
       this.status = 'Play';
       this.timeControl.pausePlayer();
     }
-    this.onPlay.emit(this.isPlay);
-    this.loopTest();
   }
 
   fast() {
@@ -71,6 +85,8 @@ export class TimelineControlComponent implements OnInit, OnChanges, OnDestroy {
     this.isPlay = false;
     this.onPlay.emit(this.isPlay);
     this.timeControl.fastForward();
+    this.timeControl.pausePlayer();
+    this.loopTest();
   }
 
   back() {
@@ -78,6 +94,8 @@ export class TimelineControlComponent implements OnInit, OnChanges, OnDestroy {
     this.isPlay = false;
     this.onPlay.emit(this.isPlay);
     this.timeControl.backward();
+    this.timeControl.pausePlayer();
+    this.loopTest();
   }
 
   changeSpeed() {
@@ -103,10 +121,9 @@ export class TimelineControlComponent implements OnInit, OnChanges, OnDestroy {
   loopTest() {
     clearInterval(this.Timer);
     console.log(this.isPlay);
+    this.playPauseStatus();
     if (this.isPlay) {
-
       let start = new Date().getTime(), elapsed = 0.0;
-
       this.Timer = window.setInterval(() => {
         this.Pulse.emit(this.isPlay);
         this.timeControl.pulsePlay();
@@ -114,7 +131,6 @@ export class TimelineControlComponent implements OnInit, OnChanges, OnDestroy {
         elapsed = Math.floor(time / 1000) / 10;
         if (Math.round(elapsed) === elapsed) { elapsed += .0; }
         console.log(time);
-
       }, this.timeInterval);
     } else {
       clearInterval(this.Timer);

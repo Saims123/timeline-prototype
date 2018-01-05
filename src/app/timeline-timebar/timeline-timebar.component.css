@@ -47,7 +47,7 @@ ul {
 }
 
 .container {
-    border: 2px dotted black;
+    border-left: 2px dotted black;
     vertical-align: text-bottom;
 }
 

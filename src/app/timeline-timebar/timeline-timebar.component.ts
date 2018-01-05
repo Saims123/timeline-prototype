@@ -36,21 +36,12 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
     this.timelineBar = document.getElementById('timeline').getBoundingClientRect();
     this.revealResult();
 
-    this.timeControlSubscription = this.timeControl.forwardBackwardControl$.subscribe((data) => {
-      this.forwardBackwardControl(data);
-      console.log('TimelineBar : ', data);
-    });
+    this.timelineControlSubscription();
+    this.timelineTimerControlSubscription();
 
-    this.testSub = this.timeControl.timerTickControl$.subscribe((data) => {
-      if (data) {
-        this.increment();
-      }
-    });
-    // this.result = this.dataTag + ' : ' + this.timeline[Math.ceil(this.dataTag)];
-    // this.IMAGE = this.sample.getTargetSample(this.timeline[this.dataTag])[0].data;
+
 
   }
-
 
   ngOnChanges() {
     this.populateData();
@@ -58,25 +49,29 @@ export class TimelineTimebarComponent implements OnInit, OnChanges {
 
   }
 
+  timelineControlSubscription() {
+    this.timeControlSubscription = this.timeControl.forwardBackwardControl$.subscribe((data) => {
+      this.forwardBackwardControl(data);
+      console.log('TimelineBar : ', data);
+    });
+  }
+
+  timelineTimerControlSubscription() {
+    this.testSub = this.timeControl.timerTickControl$.subscribe((data) => {
+      if (data) {
+        this.increment();
+      }
+    });
+  }
+
+
+
   populateData() {
     this.timeline = [];
-
-
     //Modify Risk @1
     this.dateline = new TimelineDateSystem(this.days).getDays();
-    //this.timeline = new TimelineDateSystem(this.days).timeline;
+    //this.timeline = new TimelineDateSystem(this.days).timeline; Direct Dependancy on Mock data is removed
     this.timeline = this.timeData;
-  }
-
-  //To be removed
-  increase() {
-    this.days++;
-    this.ngOnChanges();
-  }
-  //To be removed
-  decrease() {
-    this.days--;
-    this.ngOnChanges();
   }
 
   forwardBackwardControl(state) {
